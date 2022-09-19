@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./App.css";
+import PageNavigator from "./Components/PageNavigator";
 import { getToken } from "./Model/UserSlice";
 import LoginPage from "./Pages/LoginPage";
 import MainPanel from "./Pages/MainPanel";
@@ -11,7 +12,15 @@ function App() {
   const token = useSelector(getToken);
 
   return (
-    <div className="App">{(!token && <LoginPage />) || <MainPanel />}</div>
+    <div className="App">
+      <PageNavigator
+        pages={{
+          login: <LoginPage />,
+          mainMenu: <MainPanel />,
+          selectProduct: <></>,
+        }}
+      />
+    </div>
   );
 }
 

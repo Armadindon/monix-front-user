@@ -15,6 +15,7 @@ import axios from "axios";
 import { useAppDispatch } from "../hook";
 import { setToken } from "../Model/UserSlice";
 import { setToken as setTokenLocal } from "../Model/tokenManager";
+import { changePage } from "../Model/ApplicationSlice";
 
 const LoginPage = () => {
   const [login, setLogin] = useState("");
@@ -37,6 +38,8 @@ const LoginPage = () => {
     dispatch(setToken(jwtToken));
     // Si l'utilisateur demande a qu'on se rappelle de sa connexion, on stocke dans le localstorage
     if (rememberMe) setTokenLocal(jwtToken);
+    //On change l'utilisateur de page
+    dispatch(changePage("mainMenu"));
   };
 
   return (

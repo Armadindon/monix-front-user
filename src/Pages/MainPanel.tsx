@@ -42,7 +42,7 @@ const MainPanel = () => {
         }}
       >
         <Typography variant="h5">
-          {!user ? <Skeleton width="60vw"/> : `Bienvenue ${user.username} !`}
+          {!user ? <Skeleton width="40vw" /> : `Bienvenue ${user.username} !`}
         </Typography>
         {!user ? (
           <Skeleton variant="circular">
@@ -56,7 +56,7 @@ const MainPanel = () => {
         )}
         <Typography variant="h5" sx={{ display: "flex", alignItems: "center" }}>
           {!user ? (
-            <Skeleton width="60vw"/>
+            <Skeleton width="40vw" />
           ) : (
             <>
               Tu as {user.balance}
@@ -70,11 +70,15 @@ const MainPanel = () => {
             flexDirection: "column",
             width: "50%",
             height: "50vh",
-            justifyContent: "space-evenly"
+            justifyContent: "space-evenly",
           }}
         >
-          <Button variant="contained">Acheter un produit</Button>
-          <Button variant="contained">Recharger mes crédits</Button>
+          <Button variant="contained" size="large">
+            Acheter un produit
+          </Button>
+          <Button variant="contained" size="large">
+            Recharger mes crédits
+          </Button>
         </Box>
       </Box>
     </Box>

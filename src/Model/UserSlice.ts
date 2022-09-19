@@ -1,6 +1,5 @@
 import { RootState } from "../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { stat } from "fs";
 import { getTokenFromLocalStorage } from "./tokenManager";
 import { User } from "./types";
 
