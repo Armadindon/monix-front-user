@@ -29,8 +29,10 @@ export type User = {
   provider: string;
   confirmed: boolean;
   blocked: boolean;
+  balance: number;
   createdAt: string;
   updatedAt: string;
+  avatar?: Upload;
 };
 
 /** Type représentant un produit dans le backend */
