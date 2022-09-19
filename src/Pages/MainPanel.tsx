@@ -42,10 +42,10 @@ const MainPanel = () => {
         }}
       >
         <Typography variant="h5">
-          {!user ? <Skeleton /> : `Bienvenue ${user.username} !`}
+          {!user ? <Skeleton width="60vw"/> : `Bienvenue ${user.username} !`}
         </Typography>
         {!user ? (
-          <Skeleton variant="circular" width={160} height={160}>
+          <Skeleton variant="circular">
             <Avatar sx={{ width: 64, height: 64 }} />
           </Skeleton>
         ) : (
@@ -56,7 +56,7 @@ const MainPanel = () => {
         )}
         <Typography variant="h5" sx={{ display: "flex", alignItems: "center" }}>
           {!user ? (
-            <Skeleton />
+            <Skeleton width="60vw"/>
           ) : (
             <>
               Tu as {user.balance}
