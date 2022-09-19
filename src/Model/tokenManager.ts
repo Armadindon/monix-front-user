@@ -1,6 +1,6 @@
 
-export const setToken = (token: string, rememberMe: boolean) => {
-  if (rememberMe) window.localStorage.setItem("token", token);
+export const setToken = (token: string) => {
+  window.localStorage.setItem("token", token);
 };
 
 export const getTokenFromLocalStorage = () =>

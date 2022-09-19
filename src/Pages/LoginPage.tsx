@@ -14,7 +14,7 @@ import Container from "@mui/material/Container";
 import axios from "axios";
 import { useAppDispatch } from "../hook";
 import { setToken } from "../Model/UserSlice";
-import { setToken as setTokenLocal } from "../Model/UserSlice";
+import { setToken as setTokenLocal } from "../Model/tokenManager";
 
 const LoginPage = () => {
   const [login, setLogin] = useState("");
