@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../Components/Navbar";
 import { useAppDispatch } from "../hook";
+import { changePage } from "../Model/ApplicationSlice";
 import {
   getAuthenticatedUser,
   getToken,
@@ -30,56 +31,57 @@ const MainPanel = () => {
   }, [user]);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Navbar />
+    <Box
+      sx={{
+        display: "flex",
+        flex: 1,
+        alignItems: "center",
+        flexDirection: "column",
+        marginTop: "16px",
+      }}
+    >
+      <Typography variant="h5">
+        {!user ? <Skeleton width="40vw" /> : `Bienvenue ${user.username} !`}
+      </Typography>
+      {!user ? (
+        <Skeleton variant="circular">
+          <Avatar sx={{ width: 64, height: 64 }} />
+        </Skeleton>
+      ) : (
+        <Avatar
+          sx={{ width: 64, height: 64 }}
+          src={`http://localhost:1337${user.avatar?.url}`}
+        />
+      )}
+      <Typography variant="h5" sx={{ display: "flex", alignItems: "center" }}>
+        {!user ? (
+          <Skeleton width="40vw" />
+        ) : (
+          <>
+            Tu as {user.balance}
+            <MonixCoin style={{ marginLeft: ".25em" }} />
+          </>
+        )}
+      </Typography>
       <Box
         sx={{
           display: "flex",
-          flex: 1,
-          alignItems: "center",
           flexDirection: "column",
-          marginTop: "16px",
+          width: "50%",
+          height: "50vh",
+          justifyContent: "space-evenly",
         }}
       >
-        <Typography variant="h5">
-          {!user ? <Skeleton width="40vw" /> : `Bienvenue ${user.username} !`}
-        </Typography>
-        {!user ? (
-          <Skeleton variant="circular">
-            <Avatar sx={{ width: 64, height: 64 }} />
-          </Skeleton>
-        ) : (
-          <Avatar
-            sx={{ width: 64, height: 64 }}
-            src={`http://localhost:1337${user.avatar?.url}`}
-          />
-        )}
-        <Typography variant="h5" sx={{ display: "flex", alignItems: "center" }}>
-          {!user ? (
-            <Skeleton width="40vw" />
-          ) : (
-            <>
-              Tu as {user.balance}
-              <MonixCoin style={{ marginLeft: ".25em" }} />
-            </>
-          )}
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "50%",
-            height: "50vh",
-            justifyContent: "space-evenly",
-          }}
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => dispatch(changePage("selectProduct"))}
         >
-          <Button variant="contained" size="large">
-            Acheter un produit
-          </Button>
-          <Button variant="contained" size="large">
-            Recharger mes crédits
-          </Button>
-        </Box>
+          Acheter un produit
+        </Button>
+        <Button variant="contained" size="large">
+          Recharger mes crédits
+        </Button>
       </Box>
     </Box>
   );
