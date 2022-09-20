@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hook";
 import { getProducts, setProducts } from "../Model/ProductSlice";
-import { getToken } from "../Model/UserSlice";
+import { changeUserBalance, getToken } from "../Model/UserSlice";
 import { ReactComponent as MonixCoin } from "./../assets/monixcoin.svg";
 import { Product } from "../Model/types";
+import { changePage } from "../Model/ApplicationSlice";
 
 const ProductSelector = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +37,26 @@ const ProductSelector = () => {
     setAmount(newAmount);
   }, [products]);
 
-  const buyproduct = (product: Product, amount: number) => {};
+  const buyproduct = (product: Product, amount: number) => {
+    axios
+      .post(
+        "http://localhost:1337/api/buy",
+        {
+          product: product.id,
+          amount: amount,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        //TODO: Ajouter un toast pour le feedback
+        dispatch(changeUserBalance(-product.attributes.price * amount));
+        dispatch(changePage("mainMenu"));
+      });
+  };
 
   return (
     <Box

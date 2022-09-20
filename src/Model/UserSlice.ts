@@ -28,10 +28,13 @@ export const userSlice = createSlice({
     setAuthenticatedUser: (state, action: PayloadAction<User>) => {
       state.authenticatedUser = action.payload;
     },
+    changeUserBalance: (state, action:PayloadAction<number>) => {
+      if(state.authenticatedUser) state.authenticatedUser.balance += action.payload;
+    }
   },
 });
 
-export const { setToken, clearToken, setAuthenticatedUser } = userSlice.actions;
+export const { setToken, clearToken, setAuthenticatedUser, changeUserBalance } = userSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const getToken = (state: RootState) => state.user.token;
