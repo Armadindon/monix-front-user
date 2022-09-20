@@ -4,6 +4,7 @@ import "./App.css";
 import Navbar from "./Components/Navbar";
 import PageNavigator from "./Components/PageNavigator";
 import { getToken } from "./Model/UserSlice";
+import CreditAccount from "./Pages/CreditAccount";
 import LoginPage from "./Pages/LoginPage";
 import MainPanel from "./Pages/MainPanel";
 import ProductSelector from "./Pages/ProductSelector";
@@ -21,6 +22,7 @@ function App() {
           login: <LoginPage />,
           mainMenu: <MainPanel />,
           selectProduct: <ProductSelector />,
+          creditAccount: <CreditAccount />
         }}
       />
     </div>

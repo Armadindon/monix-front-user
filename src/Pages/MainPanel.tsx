@@ -79,7 +79,11 @@ const MainPanel = () => {
         >
           Acheter un produit
         </Button>
-        <Button variant="contained" size="large">
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => dispatch(changePage("creditAccount"))}
+        >
           Recharger mes crédits
         </Button>
       </Box>

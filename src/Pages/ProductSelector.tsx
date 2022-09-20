@@ -62,12 +62,11 @@ const ProductSelector = () => {
     <Box
       sx={{
         display: "flex",
-        flex: 1,
         alignItems: "center",
         flexDirection: "column",
         marginTop: "16px",
         overflowY: "scroll",
-        height: "100%",
+        height: "100%"
       }}
     >
       {products.map((product) => (
@@ -76,7 +75,6 @@ const ProductSelector = () => {
           elevation={5}
           sx={{
             width: "80%",
-            height: "30%",
             display: "flex",
             alignContent: "center",
             flexDirection: "column",

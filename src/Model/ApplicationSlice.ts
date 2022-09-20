@@ -1,9 +1,8 @@
 import { RootState } from "../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getTokenFromLocalStorage } from "./tokenManager";
-import { User } from "./types";
 
-export type Pages = "login" | "mainMenu" | "selectProduct";
+export type Pages = "login" | "mainMenu" | "selectProduct" | "creditAccount";
 
 // Define a type for the slice state
 export type ApplicationSliceState = {
