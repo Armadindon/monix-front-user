@@ -86,7 +86,7 @@ const ProductSelector = () => {
             src={`https://monix-backend.bperrin.fr${product.attributes.image.data.attributes.url}`}
             style={{ width: "100%", height: "auto" }}
           />
-          <Typography variant="h5">{product.attributes.Name}</Typography>
+          <Typography variant="h5">{product.attributes.name}</Typography>
           <Typography
             variant="h6"
             sx={{ display: "flex", alignItems: "center" }}

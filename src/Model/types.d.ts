@@ -39,7 +39,7 @@ export type User = {
 export type Product = {
   id: 1;
   attributes: {
-    Name: string;
+    name: string;
     price: number;
     stock: number;
     createdAt: string;
