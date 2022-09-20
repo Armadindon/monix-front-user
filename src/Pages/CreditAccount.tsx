@@ -15,7 +15,7 @@ const CreditAccount = () => {
   const credit = (amount: number) => {
     axios
       .post(
-        "http://localhost:1337/api/credit",
+        "https://monix-back.bperrin.fr/api/credit",
         {
           amount: amount,
         },

@@ -22,7 +22,7 @@ const ProductSelector = () => {
     //TODO: Mettre plutot à nul dans l'initialState
     if (!products.length) {
       axios
-        .get("http://localhost:1337/api/products?populate=*", {
+        .get("https://monix-back.bperrin.fr/api/products?populate=*", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -40,7 +40,7 @@ const ProductSelector = () => {
   const buyproduct = (product: Product, amount: number) => {
     axios
       .post(
-        "http://localhost:1337/api/buy",
+        "https://monix-back.bperrin.fr/api/buy",
         {
           product: product.id,
           amount: amount,
@@ -83,7 +83,7 @@ const ProductSelector = () => {
         >
           {/** Note a soi même : je deteste le mec qui a rendu les api ultra compliqué chez strapi :c */}
           <img
-            src={`http://localhost:1337${product.attributes.image.data.attributes.url}`}
+            src={`https://monix-back.bperrin.fr${product.attributes.image.data.attributes.url}`}
             style={{ width: "100%", height: "auto" }}
           />
           <Typography variant="h5">{product.attributes.Name}</Typography>
