@@ -21,7 +21,7 @@ const MainPanel = () => {
   useEffect(() => {
     if (!user) {
       axios
-        .get("https://monix-back.bperrin.fr/api/users/me?populate=avatar", {
+        .get("https://monix-backend.bperrin.fr/api/users/me?populate=avatar", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -50,7 +50,7 @@ const MainPanel = () => {
       ) : (
         <Avatar
           sx={{ width: 64, height: 64 }}
-          src={`https://monix-back.bperrin.fr${user.avatar?.url}`}
+          src={`https://monix-backend.bperrin.fr${user.avatar?.url}`}
         />
       )}
       <Typography variant="h5" sx={{ display: "flex", alignItems: "center" }}>

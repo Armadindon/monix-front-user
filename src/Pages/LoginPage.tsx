@@ -28,7 +28,7 @@ const LoginPage = () => {
     evt.preventDefault();
 
     const loginResponse = await axios.post(
-      "https://monix-back.bperrin.fr/api/auth/local",
+      "https://monix-backend.bperrin.fr/api/auth/local",
       {
         identifier: login,
         password: password,
