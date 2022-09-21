@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
+  addSnackbarMessage,
   changePage,
   isDrawerOpened,
   switchDrawer,
@@ -46,6 +47,12 @@ const AppDrawer = () => {
               clearTokenFromLocalStorage();
               dispatch(switchDrawer());
               dispatch(changePage("login"));
+              dispatch(
+                addSnackbarMessage({
+                  message: "Deconnecté ! 🏃",
+                  options: { variant: "default" },
+                })
+              );
             }}
           >
             <ListItemIcon>

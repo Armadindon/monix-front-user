@@ -7,7 +7,7 @@ import { getProducts, setProducts } from "../Model/ProductSlice";
 import { changeUserBalance } from "../Model/UserSlice";
 import { ReactComponent as MonixCoin } from "./../assets/monixcoin.svg";
 import { Product } from "../Model/types";
-import { changePage } from "../Model/ApplicationSlice";
+import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
 import sendApiRequest from "../Model/WebApi";
 
 const ProductSelector = () => {
@@ -49,6 +49,12 @@ const ProductSelector = () => {
       if (!response) return;
       dispatch(changeUserBalance(-product.attributes.price * amount));
       dispatch(changePage("mainMenu"));
+      dispatch(
+        addSnackbarMessage({
+          message: "Produit acheté avec succès ! 🍫",
+          options: { variant: "success" },
+        })
+      );
     });
   };
 

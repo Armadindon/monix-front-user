@@ -8,7 +8,7 @@ import {
 } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hook";
-import { changePage } from "../Model/ApplicationSlice";
+import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
 import {
   getAuthenticatedUser,
   getToken,
@@ -55,6 +55,12 @@ const EditAccount = () => {
     }).then((response) => {
       if (response) dispatch(setAuthenticatedUser(response?.data));
       dispatch(changePage("mainMenu"));
+      dispatch(
+        addSnackbarMessage({
+          message: "Compte modifié ! ✍️",
+          options: { variant: "success" },
+        })
+      );
     });
   };
 

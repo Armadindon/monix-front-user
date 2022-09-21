@@ -1,19 +1,33 @@
 import { RootState } from "../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getTokenFromLocalStorage } from "./tokenManager";
+import { OptionsObject, SnackbarKey } from "notistack";
+import { Snackbar } from "@mui/material";
 
-export type Pages = "login" | "mainMenu" | "selectProduct" | "creditAccount" | "editAccount";
+export type Pages =
+  | "login"
+  | "mainMenu"
+  | "selectProduct"
+  | "creditAccount"
+  | "editAccount";
+
+export type SnackBarMessage = {
+  message: string;
+  options: OptionsObject;
+};
 
 // Define a type for the slice state
 export type ApplicationSliceState = {
   currentPage: Pages;
   openedDrawer: boolean;
+  messagesToShow: SnackBarMessage[];
 };
 
 // Define the initial state using that type
 const initialState: ApplicationSliceState = {
   currentPage: getTokenFromLocalStorage() ? "mainMenu" : "login",
   openedDrawer: false,
+  messagesToShow: [],
 };
 
 export const applicationSlice = createSlice({
@@ -26,11 +40,23 @@ export const applicationSlice = createSlice({
     },
     switchDrawer: (state) => {
       state.openedDrawer = !state.openedDrawer;
-    }
+    },
+    addSnackbarMessage: (state, action: PayloadAction<SnackBarMessage>) => ({
+      ...state,
+      messagesToShow: [...state.messagesToShow, action.payload],
+    }),
+    removeFirstSnackbarMessage: (state) => {
+      state.messagesToShow.shift();
+    },
   },
 });
 
-export const { changePage, switchDrawer } = applicationSlice.actions;
+export const {
+  changePage,
+  switchDrawer,
+  addSnackbarMessage,
+  removeFirstSnackbarMessage,
+} = applicationSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const getCurrentPage = (state: RootState) =>
@@ -38,5 +64,8 @@ export const getCurrentPage = (state: RootState) =>
 
 export const isDrawerOpened = (state: RootState) =>
   state.application.openedDrawer;
+
+export const getSnackbarMessages = (state: RootState) =>
+  state.application.messagesToShow;
 
 export default applicationSlice.reducer;

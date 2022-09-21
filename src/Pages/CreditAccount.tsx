@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { useAppDispatch } from "../hook";
-import { changePage } from "../Model/ApplicationSlice";
+import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
 import { changeUserBalance } from "../Model/UserSlice";
 import sendApiRequest from "../Model/WebApi";
 
@@ -13,6 +13,7 @@ const CreditAccount = () => {
   const credit = (amount: number) => {
     sendApiRequest({
       url: "/credit",
+      method: "POST",
       data: {
         amount: amount,
       },
@@ -20,6 +21,12 @@ const CreditAccount = () => {
       if (!response) return;
       //TODO: Ajouter un toast pour le feedback
       dispatch(changeUserBalance(amount));
+      dispatch(
+        addSnackbarMessage({
+          message: "Votre compte a bien été crédité ! 💸",
+          options: { variant: "success" },
+        })
+      );
       dispatch(changePage("mainMenu"));
     });
   };
