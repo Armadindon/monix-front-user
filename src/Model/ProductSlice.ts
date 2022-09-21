@@ -1,7 +1,6 @@
 import { RootState } from "../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getTokenFromLocalStorage } from "./tokenManager";
-import { Product, User } from "./types";
+import { Product } from "./types";
 
 // Define a type for the slice state
 export type ProductSliceState = {
@@ -27,7 +26,6 @@ export const productsSlice = createSlice({
 export const { setProducts } = productsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const getProducts = (state: RootState) =>
-  state.products.products;
+export const getProducts = (state: RootState) => state.products.products;
 
 export default productsSlice.reducer;

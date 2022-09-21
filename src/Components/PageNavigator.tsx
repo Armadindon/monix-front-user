@@ -26,15 +26,15 @@ const PageNavigator = ({ pages }: PageNavigatorProps) => {
     if (currentComponent.type !== pages[currentPage].type) {
       setInTransitionOut(true);
     }
+    // On ignore, car on veut pas retrigger le useEffect dans le cas de changement de composant ou la liste de pages (qui est fixe logiqument)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   return (
     <Slide
       in={!inTransitionOut}
       appear={false}
-      direction={
-        inTransitionOut ? "right" : "left"
-      }
+      direction={inTransitionOut ? "right" : "left"}
       mountOnEnter
       onExit={() => console.log("exiting")}
       onExited={onExited}

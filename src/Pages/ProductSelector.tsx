@@ -1,10 +1,10 @@
-import { Button, Container, Paper, TextField, Typography } from "@mui/material";
+import { Button, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hook";
 import { getProducts, setProducts } from "../Model/ProductSlice";
-import { changeUserBalance, getToken } from "../Model/UserSlice";
+import { changeUserBalance } from "../Model/UserSlice";
 import { ReactComponent as MonixCoin } from "./../assets/monixcoin.svg";
 import { Product } from "../Model/types";
 import { changePage } from "../Model/ApplicationSlice";
@@ -13,7 +13,6 @@ import sendApiRequest from "../Model/WebApi";
 const ProductSelector = () => {
   const dispatch = useAppDispatch();
   const products = useSelector(getProducts);
-  const token = useSelector(getToken);
 
   //On crée un state "dictionnaire" ou pour chaque id de produit on met le montant dans l'input
   const [amount, setAmount] = useState<{ [productId in number]: number }>({});
@@ -33,6 +32,8 @@ const ProductSelector = () => {
       if (!newAmount[product.id]) newAmount[product.id] = 1;
     }
     setAmount(newAmount);
+    // On ignore, car on veut seulement remplir amounts dans le callback
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products]);
 
   const buyproduct = (product: Product, amount: number) => {
@@ -58,7 +59,7 @@ const ProductSelector = () => {
         alignItems: "center",
         flexDirection: "column",
         overflowY: "scroll",
-        height: "100%"
+        height: "100%",
       }}
     >
       {products.map((product) => (
@@ -77,6 +78,7 @@ const ProductSelector = () => {
           <img
             src={`https://monix-backend.bperrin.fr${product.attributes.image.data.attributes.url}`}
             style={{ width: "100%", height: "auto" }}
+            alt={product.attributes.name}
           />
           <Typography variant="h5">{product.attributes.name}</Typography>
           <Typography

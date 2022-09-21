@@ -1,16 +1,14 @@
 import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hook";
 import { changePage } from "../Model/ApplicationSlice";
-import { changeUserBalance, getToken } from "../Model/UserSlice";
+import { changeUserBalance } from "../Model/UserSlice";
 import sendApiRequest from "../Model/WebApi";
 
 const CreditAccount = () => {
   const dispatch = useAppDispatch();
   const [amount, setAmount] = useState(1);
-  const token = useSelector(getToken);
 
   const credit = (amount: number) => {
     sendApiRequest({
@@ -19,7 +17,7 @@ const CreditAccount = () => {
         amount: amount,
       },
     }).then((response) => {
-      if(!response) return;
+      if (!response) return;
       //TODO: Ajouter un toast pour le feedback
       dispatch(changeUserBalance(amount));
       dispatch(changePage("mainMenu"));

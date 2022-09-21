@@ -1,22 +1,15 @@
 import { Avatar, Button, Skeleton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import axios from "axios";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Navbar from "../Components/Navbar";
 import { useAppDispatch } from "../hook";
 import { changePage } from "../Model/ApplicationSlice";
-import {
-  getAuthenticatedUser,
-  getToken,
-  setAuthenticatedUser,
-} from "../Model/UserSlice";
+import { getAuthenticatedUser, setAuthenticatedUser } from "../Model/UserSlice";
 import sendApiRequest from "../Model/WebApi";
 import { ReactComponent as MonixCoin } from "./../assets/monixcoin.svg";
 
 const MainPanel = () => {
   const dispatch = useAppDispatch();
-  const token = useSelector(getToken);
   const user = useSelector(getAuthenticatedUser);
 
   useEffect(() => {
@@ -27,6 +20,8 @@ const MainPanel = () => {
         }
       );
     }
+    // On ignore, car on veut pas retrigger le useEffect en changement de dispatch (wtf)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (
