@@ -27,8 +27,9 @@ const LoginPage = () => {
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
+    // Note pour cet appel api, on utilise pas WebApi.ts, car celui-ci dépend sur le token, or, ici on fetch le token
     const loginResponse = await axios.post(
-      "https://monix-backend.bperrin.fr/api/auth/local",
+      `${process.env.REACT_APP_BACKEND_URL}/auth/local`,
       {
         identifier: login,
         password: password,

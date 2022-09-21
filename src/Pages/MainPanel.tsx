@@ -11,6 +11,7 @@ import {
   getToken,
   setAuthenticatedUser,
 } from "../Model/UserSlice";
+import sendApiRequest from "../Model/WebApi";
 import { ReactComponent as MonixCoin } from "./../assets/monixcoin.svg";
 
 const MainPanel = () => {
@@ -20,13 +21,11 @@ const MainPanel = () => {
 
   useEffect(() => {
     if (!user) {
-      axios
-        .get("https://monix-backend.bperrin.fr/api/users/me?populate=avatar", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(({ data }) => dispatch(setAuthenticatedUser(data)));
+      sendApiRequest({ url: "/users/me?populate=avatar", method: "GET" }).then(
+        (response) => {
+          if (response) dispatch(setAuthenticatedUser(response.data));
+        }
+      );
     }
   }, [user]);
 
@@ -50,7 +49,7 @@ const MainPanel = () => {
       ) : (
         <Avatar
           sx={{ width: 64, height: 64 }}
-          src={`https://monix-backend.bperrin.fr${user.avatar?.url}`}
+          src={`${process.env.REACT_APP_BACKEND_URL}${user.avatar?.url}`}
         />
       )}
       <Typography variant="h5" sx={{ display: "flex", alignItems: "center" }}>

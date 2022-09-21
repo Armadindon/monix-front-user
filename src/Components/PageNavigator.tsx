@@ -40,7 +40,7 @@ const PageNavigator = ({ pages }: PageNavigatorProps) => {
       onExited={onExited}
     >
       {/** On met le children dans un fragment pour régler le problème de typage  */}
-      <Box sx={{height: "100%"}}>{currentComponent}</Box>
+      <Box>{currentComponent}</Box>
     </Slide>
   );
 };

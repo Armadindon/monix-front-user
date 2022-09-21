@@ -1,36 +1,30 @@
 import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hook";
 import { changePage } from "../Model/ApplicationSlice";
 import { changeUserBalance, getToken } from "../Model/UserSlice";
+import sendApiRequest from "../Model/WebApi";
 
 const CreditAccount = () => {
   const dispatch = useAppDispatch();
   const [amount, setAmount] = useState(1);
-  const token = useSelector(getToken)
+  const token = useSelector(getToken);
 
   const credit = (amount: number) => {
-    axios
-      .post(
-        "https://monix-backend.bperrin.fr/api/credit",
-        {
-          amount: amount,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then(() => {
-        //TODO: Ajouter un toast pour le feedback
-        dispatch(changeUserBalance(amount));
-        dispatch(changePage("mainMenu"));
-      });
-  }
+    sendApiRequest({
+      url: "/credit",
+      data: {
+        amount: amount,
+      },
+    }).then((response) => {
+      if(!response) return;
+      //TODO: Ajouter un toast pour le feedback
+      dispatch(changeUserBalance(amount));
+      dispatch(changePage("mainMenu"));
+    });
+  };
 
   return (
     <Box

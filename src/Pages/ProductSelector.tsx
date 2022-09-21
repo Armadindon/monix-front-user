@@ -1,6 +1,5 @@
-import { Button, Paper, TextField, Typography } from "@mui/material";
+import { Button, Container, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hook";
@@ -9,6 +8,7 @@ import { changeUserBalance, getToken } from "../Model/UserSlice";
 import { ReactComponent as MonixCoin } from "./../assets/monixcoin.svg";
 import { Product } from "../Model/types";
 import { changePage } from "../Model/ApplicationSlice";
+import sendApiRequest from "../Model/WebApi";
 
 const ProductSelector = () => {
   const dispatch = useAppDispatch();
@@ -21,13 +21,11 @@ const ProductSelector = () => {
   useEffect(() => {
     //TODO: Mettre plutot à nul dans l'initialState
     if (!products.length) {
-      axios
-        .get("https://monix-backend.bperrin.fr/api/products?populate=*", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(({ data }) => dispatch(setProducts(data.data)));
+      sendApiRequest({ url: "/products?populate=*", method: "GET" }).then(
+        (response) => {
+          if (response) dispatch(setProducts(response.data.data));
+        }
+      );
     }
     // Quand les produits changent, on met à jour amounts
     const newAmount = { ...amount };
@@ -38,24 +36,19 @@ const ProductSelector = () => {
   }, [products]);
 
   const buyproduct = (product: Product, amount: number) => {
-    axios
-      .post(
-        "https://monix-backend.bperrin.fr/api/buy",
-        {
-          product: product.id,
-          amount: amount,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then(() => {
-        //TODO: Ajouter un toast pour le feedback
-        dispatch(changeUserBalance(-product.attributes.price * amount));
-        dispatch(changePage("mainMenu"));
-      });
+    sendApiRequest({
+      url: "/buy",
+      method: "POST",
+      data: {
+        product: product.id,
+        amount: amount,
+      },
+    }).then((response) => {
+      //TODO: Ajouter un toast pour le feedback
+      if (!response) return;
+      dispatch(changeUserBalance(-product.attributes.price * amount));
+      dispatch(changePage("mainMenu"));
+    });
   };
 
   return (
@@ -64,7 +57,6 @@ const ProductSelector = () => {
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
-        marginTop: "16px",
         overflowY: "scroll",
         height: "100%"
       }}

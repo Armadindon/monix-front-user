@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./App.css";
 import Navbar from "./Components/Navbar";
