@@ -76,7 +76,7 @@ const ProductSelector = () => {
         >
           {/** Note a soi même : je deteste le mec qui a rendu les api ultra compliqué chez strapi :c */}
           <img
-            src={`https://monix-backend.bperrin.fr${product.attributes.image.data.attributes.url}`}
+            src={`${process.env.REACT_APP_BACKEND_URL}${product.attributes.image.data.attributes.url}`}
             style={{ width: "100%", height: "auto" }}
             alt={product.attributes.name}
           />

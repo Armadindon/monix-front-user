@@ -29,7 +29,7 @@ const LoginPage = () => {
 
     // Note pour cet appel api, on utilise pas WebApi.ts, car celui-ci dépend sur le token, or, ici on fetch le token
     const loginResponse = await axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}/auth/local`,
+      `${process.env.REACT_APP_BACKEND_URL}/api/auth/local`,
       {
         identifier: login,
         password: password,

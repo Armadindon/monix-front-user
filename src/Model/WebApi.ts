@@ -6,7 +6,7 @@ const sendApiRequest = async (request: AxiosRequestConfig<any>) => {
   try {
     const result = await axios({
       ...request,
-      baseURL: process.env.REACT_APP_BACKEND_URL,
+      baseURL: `${process.env.REACT_APP_BACKEND_URL}/api`,
       headers: { ...request.headers, Authorization: `Bearer ${token}` },
     });
     return result;
