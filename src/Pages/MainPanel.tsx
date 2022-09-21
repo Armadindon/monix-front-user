@@ -39,11 +39,11 @@ const MainPanel = () => {
       </Typography>
       {!user ? (
         <Skeleton variant="circular">
-          <Avatar sx={{ width: 64, height: 64 }} />
+          <Avatar sx={{ width: 128, height: 128 }} />
         </Skeleton>
       ) : (
         <Avatar
-          sx={{ width: 64, height: 64 }}
+          sx={{ width: 128, height: 128 }}
           src={`${process.env.REACT_APP_BACKEND_URL}${user.avatar?.url}`}
         />
       )}

@@ -2,7 +2,7 @@ import { RootState } from "../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getTokenFromLocalStorage } from "./tokenManager";
 
-export type Pages = "login" | "mainMenu" | "selectProduct" | "creditAccount";
+export type Pages = "login" | "mainMenu" | "selectProduct" | "creditAccount" | "editAccount";
 
 // Define a type for the slice state
 export type ApplicationSliceState = {

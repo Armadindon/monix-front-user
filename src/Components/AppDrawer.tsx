@@ -27,7 +27,12 @@ const AppDrawer = () => {
       <Toolbar />
       <List>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              dispatch(changePage("editAccount"));
+              dispatch(switchDrawer());
+            }}
+          >
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>

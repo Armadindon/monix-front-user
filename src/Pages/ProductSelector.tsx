@@ -59,7 +59,6 @@ const ProductSelector = () => {
         alignItems: "center",
         flexDirection: "column",
         overflowY: "scroll",
-        height: "100%",
       }}
     >
       {products.map((product) => (
