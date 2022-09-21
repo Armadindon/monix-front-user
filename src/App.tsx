@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import "./App.css";
+import AppDrawer from "./Components/AppDrawer";
 import Navbar from "./Components/Navbar";
 import PageNavigator from "./Components/PageNavigator";
 import { getToken } from "./Model/UserSlice";
@@ -21,9 +22,11 @@ function App() {
           login: <LoginPage />,
           mainMenu: <MainPanel />,
           selectProduct: <ProductSelector />,
-          creditAccount: <CreditAccount />
+          creditAccount: <CreditAccount />,
         }}
-      />
+      >
+        <AppDrawer />
+      </PageNavigator>
     </div>
   );
 }

@@ -4,19 +4,20 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useAppDispatch } from "../hook";
-import { changePage } from "../Model/ApplicationSlice";
+import { changePage, switchDrawer } from "../Model/ApplicationSlice";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
   return (
     <>
-      <AppBar>
+      <AppBar sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={() => dispatch(switchDrawer())}
           >
             <MenuIcon />
           </IconButton>

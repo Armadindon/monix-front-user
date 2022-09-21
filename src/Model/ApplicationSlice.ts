@@ -7,11 +7,13 @@ export type Pages = "login" | "mainMenu" | "selectProduct" | "creditAccount";
 // Define a type for the slice state
 export type ApplicationSliceState = {
   currentPage: Pages;
+  openedDrawer: boolean;
 };
 
 // Define the initial state using that type
 const initialState: ApplicationSliceState = {
-    currentPage: getTokenFromLocalStorage()?"mainMenu":"login",
+  currentPage: getTokenFromLocalStorage() ? "mainMenu" : "login",
+  openedDrawer: false,
 };
 
 export const applicationSlice = createSlice({
@@ -21,13 +23,20 @@ export const applicationSlice = createSlice({
   reducers: {
     changePage: (state, action: PayloadAction<Pages>) => {
       state.currentPage = action.payload;
+    },
+    switchDrawer: (state) => {
+      state.openedDrawer = !state.openedDrawer;
     }
   },
 });
 
-export const { changePage } = applicationSlice.actions;
+export const { changePage, switchDrawer } = applicationSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const getCurrentPage = (state: RootState) => state.application.currentPage;
+export const getCurrentPage = (state: RootState) =>
+  state.application.currentPage;
+
+export const isDrawerOpened = (state: RootState) =>
+  state.application.openedDrawer;
 
 export default applicationSlice.reducer;

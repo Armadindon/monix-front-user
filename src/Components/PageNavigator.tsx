@@ -9,7 +9,10 @@ export type PageNavigatorProps = {
 };
 
 /** Utility component for making transitions */
-const PageNavigator = ({ pages }: PageNavigatorProps) => {
+const PageNavigator = ({
+  pages,
+  children,
+}: React.PropsWithChildren<PageNavigatorProps>) => {
   const currentPage = useSelector(getCurrentPage);
   const [inTransitionOut, setInTransitionOut] = useState(false);
   const [currentComponent, setCurrentComponent] = useState(pages[currentPage]);
@@ -36,11 +39,12 @@ const PageNavigator = ({ pages }: PageNavigatorProps) => {
       appear={false}
       direction={inTransitionOut ? "right" : "left"}
       mountOnEnter
-      onExit={() => console.log("exiting")}
       onExited={onExited}
     >
-      {/** On met le children dans un fragment pour régler le problème de typage  */}
-      <Box>{currentComponent}</Box>
+      <Box>
+        {children}
+        {currentComponent}
+      </Box>
     </Slide>
   );
 };

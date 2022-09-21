@@ -5,3 +5,6 @@ export const setToken = (token: string) => {
 
 export const getTokenFromLocalStorage = () =>
   window.localStorage.getItem("token") || undefined;
+
+export const clearTokenFromLocalStorage = () =>
+  window.localStorage.removeItem("token");
