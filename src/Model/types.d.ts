@@ -58,8 +58,9 @@ export type Product = {
 export type History = {
   id: number;
   attributes: {
+    description: string;
+    movement: number;
     amount: number;
-    price: number;
     createdAt: string;
     updatedAt: string;
     product: {

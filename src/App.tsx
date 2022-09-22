@@ -6,6 +6,7 @@ import PageNavigator from "./Components/PageNavigator";
 import { getToken } from "./Model/UserSlice";
 import CreditAccount from "./Pages/CreditAccount";
 import EditAccount from "./Pages/EditAccount";
+import HistoryPanel from "./Pages/HistoryPanel";
 import LoginPage from "./Pages/LoginPage";
 import MainPanel from "./Pages/MainPanel";
 import ProductSelector from "./Pages/ProductSelector";
@@ -25,6 +26,7 @@ function App() {
           selectProduct: <ProductSelector />,
           creditAccount: <CreditAccount />,
           editAccount: <EditAccount />,
+          historyPanel: <HistoryPanel />,
         }}
       >
         <AppDrawer />

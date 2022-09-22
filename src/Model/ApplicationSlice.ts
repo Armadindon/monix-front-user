@@ -9,7 +9,8 @@ export type Pages =
   | "mainMenu"
   | "selectProduct"
   | "creditAccount"
-  | "editAccount";
+  | "editAccount"
+  | "historyPanel";
 
 export type SnackBarMessage = {
   message: string;

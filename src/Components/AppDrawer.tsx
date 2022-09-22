@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AlignHorizontalLeftIcon from "@mui/icons-material/AlignHorizontalLeft";
 import {
   addSnackbarMessage,
   changePage,
@@ -38,6 +39,19 @@ const AppDrawer = () => {
               <AccountCircleIcon />
             </ListItemIcon>
             <ListItemText primary="Modifier mon profil" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => {
+              dispatch(switchDrawer());
+              dispatch(changePage("historyPanel"));
+            }}
+          >
+            <ListItemIcon>
+              <AlignHorizontalLeftIcon />
+            </ListItemIcon>
+            <ListItemText primary="Historique" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
