@@ -160,7 +160,7 @@ const ProductSelector = () => {
               <TextField
                 disabled={product.attributes.stock == 0}
                 label="Nombre"
-                sx={{ m: 1, width: "25ch" }}
+                sx={{ m: 1 }}
                 InputProps={{
                   type: "number",
                   inputProps: { min: 1, max: product.attributes.stock },
