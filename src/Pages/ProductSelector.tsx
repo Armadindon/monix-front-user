@@ -42,7 +42,11 @@ const ProductSelector = () => {
   //Update Product with filter
   useEffect(() => {
     setDisplayedProducts(
-      products.filter((prod) => prod.attributes.name.includes(productFilter))
+      products.filter((prod) =>
+        prod.attributes.name
+          .toLocaleLowerCase()
+          .includes(productFilter.toLocaleLowerCase())
+      )
     );
   }, [products, productFilter]);
 

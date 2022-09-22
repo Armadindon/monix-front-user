@@ -34,12 +34,15 @@ const HistoryPanel = () => {
         url: `/histories?populate=product&filters[user][id][$eq]=${user?.id}`,
       }).then((response) => {
         const data: History[] = response?.data.data;
-        data.sort(
-          (a, b) =>
-            new Date(a.attributes.createdAt).getTime() -
-            new Date(b.attributes.createdAt).getTime()
+        dispatch(
+          setPersonalHistory(
+            data.sort(
+              (a, b) =>
+                new Date(b.attributes.createdAt).getTime() -
+                new Date(a.attributes.createdAt).getTime()
+            )
+          )
         );
-        dispatch(setPersonalHistory(data));
       });
     }
   }, [history]);
