@@ -37,7 +37,6 @@ const sendApiRequest = async (request: AxiosRequestConfig<any>) => {
           },
         })
       );
-      console.error(error);
     }
   }
 };

@@ -15,7 +15,7 @@ import axios from "axios";
 import { useAppDispatch } from "../hook";
 import { setToken } from "../Model/UserSlice";
 import { setToken as setTokenLocal } from "../Model/tokenManager";
-import { changePage } from "../Model/ApplicationSlice";
+import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
 
 const LoginPage = () => {
   const [login, setLogin] = useState("");
@@ -28,19 +28,53 @@ const LoginPage = () => {
     evt.preventDefault();
 
     // Note pour cet appel api, on utilise pas WebApi.ts, car celui-ci dépend sur le token, or, ici on fetch le token
-    const loginResponse = await axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}/api/auth/local`,
-      {
-        identifier: login,
-        password: password,
+    try {
+      const loginResponse = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/auth/local`,
+        {
+          identifier: login,
+          password: password,
+        }
+      );
+      const jwtToken = loginResponse.data.jwt;
+      dispatch(setToken(jwtToken));
+      // Si l'utilisateur demande a qu'on se rappelle de sa connexion, on stocke dans le localstorage
+      if (rememberMe) setTokenLocal(jwtToken);
+      //On change l'utilisateur de page
+      dispatch(changePage("mainMenu"));
+      dispatch(
+        addSnackbarMessage({
+          message: "Vous êtes bien connecté ! 👋",
+          options: {
+            variant: "success",
+          },
+        })
+      );
+    } catch (error: any) {
+      console.log(error);
+      if (
+        error?.response?.data?.error?.message &&
+        typeof error?.response?.data?.error?.message == "string"
+      ) {
+        dispatch(
+          addSnackbarMessage({
+            message: error.response.data.error.message,
+            options: {
+              variant: "error",
+            },
+          })
+        );
+      } else {
+        dispatch(
+          addSnackbarMessage({
+            message: "Erreur inconnue en contactan l'api",
+            options: {
+              variant: "error",
+            },
+          })
+        );
       }
-    );
-    const jwtToken = loginResponse.data.jwt;
-    dispatch(setToken(jwtToken));
-    // Si l'utilisateur demande a qu'on se rappelle de sa connexion, on stocke dans le localstorage
-    if (rememberMe) setTokenLocal(jwtToken);
-    //On change l'utilisateur de page
-    dispatch(changePage("mainMenu"));
+    }
   };
 
   return (
