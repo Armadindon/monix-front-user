@@ -31,7 +31,8 @@ const ProductSelector = () => {
     // Quand les produits changent, on met à jour amounts
     const newAmount = { ...amount };
     for (let product of products) {
-      if (!newAmount[product.id]) newAmount[product.id] = 1;
+      if (!newAmount[product.id] && product.attributes.stock != 0)
+        newAmount[product.id] = 1;
     }
     setAmount(newAmount);
     // On ignore, car on veut seulement remplir amounts dans le callback
@@ -67,6 +68,7 @@ const ProductSelector = () => {
     });
   };
 
+  // TODO: Voir pour simplifier le code de la page, il est horrible sa maman
   return (
     <Box
       sx={{
@@ -89,7 +91,7 @@ const ProductSelector = () => {
           elevation={5}
           sx={{
             width: "80vw",
-            height: "50vw",
+            height: "600px",
             display: "flex",
             alignContent: "center",
             flexDirection: "column",
@@ -98,17 +100,49 @@ const ProductSelector = () => {
             margin: "10px",
           }}
         >
+          {/** Si le produit n'est Plus en stock, on informe l'utilisateur */}
+          {product.attributes.stock == 0 && (
+            <Paper
+              sx={{
+                zIndex: 1000,
+                position: "absolute",
+                display: "flex",
+                backgroundColor: "#000",
+                opacity: 0.8,
+                height: "600px",
+                width: "80vw",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h3" color="white">
+                Plus de stock
+              </Typography>
+            </Paper>
+          )}
           {/** Note a soi même : je deteste le mec qui a rendu les api ultra compliqué chez strapi :c */}
-          <img
-            src={`${process.env.REACT_APP_BACKEND_URL}${product.attributes.image.data.attributes.url}`}
-            style={{
-              maxHeight: "100%",
-              maxWidth: "50vw",
-              width: "auto",
-              height: "auto",
+          <Box
+            sx={{
+              display: "flex",
+              height: "400px",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-            alt={product.attributes.name}
-          />
+          >
+            <img
+              src={`${process.env.REACT_APP_BACKEND_URL}${product.attributes.image.data.attributes.url}`}
+              style={{
+                margin: "10px",
+                maxHeight: "300px",
+                maxWidth: "50vw",
+                width: "auto",
+                height: "auto",
+                alignSelf: "center",
+              }}
+              alt={product.attributes.name}
+            />
+          </Box>
+
           <Box sx={{ alignSelf: "flex-start", margin: "10px" }}>
             <Typography variant="h5">{product.attributes.name}</Typography>
             <Typography
@@ -120,11 +154,15 @@ const ProductSelector = () => {
             </Typography>
             <Box sx={{ display: "flex" }}>
               <TextField
+                disabled={product.attributes.stock == 0}
                 label="Nombre"
                 sx={{ m: 1, width: "25ch" }}
-                InputProps={{ type: "number", inputProps: { min: 1 } }}
+                InputProps={{
+                  type: "number",
+                  inputProps: { min: 1, max: product.attributes.stock },
+                }}
                 value={
-                  amount[product.id] !== undefined ? amount[product.id] : 1
+                  amount[product.id] !== undefined ? amount[product.id] : 0
                 }
                 onChange={(evt) => {
                   const newAmount = { ...amount };
@@ -132,7 +170,10 @@ const ProductSelector = () => {
                   setAmount(newAmount);
                 }}
               />
-              <Button onClick={() => buyproduct(product, amount[product.id])}>
+              <Button
+                onClick={() => buyproduct(product, amount[product.id])}
+                disabled={product.attributes.stock == 0}
+              >
                 Acheter !
               </Button>
             </Box>
