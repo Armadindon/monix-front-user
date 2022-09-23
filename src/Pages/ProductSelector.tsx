@@ -1,4 +1,4 @@
-import { Button, Paper, TextField, Typography } from "@mui/material";
+import { Button, Modal, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -9,12 +9,14 @@ import { ReactComponent as MonixCoin } from "./../assets/monixcoin.svg";
 import { Product } from "../Model/types";
 import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
 import sendApiRequest from "../Model/WebApi";
+import BarcodeDecoder from "../Components/BarcodeDecoder";
 
 const ProductSelector = () => {
   const dispatch = useAppDispatch();
   const products = useSelector(getProducts);
   const [displayedProducts, setDisplayedProducts] = useState(products);
   const [productFilter, setProductFilter] = useState("");
+  const [scannerModalOpened, setScannerModalOpened] = useState(false);
 
   //On crée un state "dictionnaire" ou pour chaque id de produit on met le montant dans l'input
   const [amount, setAmount] = useState<{ [productId in number]: number }>({});
@@ -31,7 +33,7 @@ const ProductSelector = () => {
     // Quand les produits changent, on met à jour amounts
     const newAmount = { ...amount };
     for (let product of products) {
-      if (!newAmount[product.id] && product.attributes.stock != 0)
+      if (!newAmount[product.id] && product.attributes.stock !== 0)
         newAmount[product.id] = 1;
     }
     setAmount(newAmount);
@@ -82,6 +84,38 @@ const ProductSelector = () => {
         overflowY: "scroll",
       }}
     >
+      <Modal
+        open={scannerModalOpened}
+        onClose={() => setScannerModalOpened(false)}
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
+        <BarcodeDecoder
+          onResult={(result) => {
+            console.log(result);
+            const filteredResults = displayedProducts.filter(
+              (product) => product.attributes.barcode === result.barcode
+            );
+            if (filteredResults.length > 0) {
+              setDisplayedProducts(filteredResults);
+              dispatch(
+                addSnackbarMessage({
+                  message: "Produit trouvé !",
+                  options: { variant: "info" },
+                })
+              );
+              setScannerModalOpened(false);
+            }
+          }}
+        />
+      </Modal>
+
+      <Button
+        sx={{ marginTop: "15px", width: "80vw" }}
+        variant="contained"
+        onClick={() => setScannerModalOpened(true)}
+      >
+        Scanner le produit
+      </Button>
       <TextField
         variant="outlined"
         label="Votre recherche"
@@ -105,7 +139,7 @@ const ProductSelector = () => {
           }}
         >
           {/** Si le produit n'est Plus en stock, on informe l'utilisateur */}
-          {product.attributes.stock == 0 && (
+          {product.attributes.stock === 0 && (
             <Paper
               sx={{
                 zIndex: 1000,
@@ -158,7 +192,7 @@ const ProductSelector = () => {
             </Typography>
             <Box sx={{ display: "flex" }}>
               <TextField
-                disabled={product.attributes.stock == 0}
+                disabled={product.attributes.stock === 0}
                 label="Nombre"
                 sx={{ m: 1 }}
                 InputProps={{
@@ -176,7 +210,7 @@ const ProductSelector = () => {
               />
               <Button
                 onClick={() => buyproduct(product, amount[product.id])}
-                disabled={product.attributes.stock == 0}
+                disabled={product.attributes.stock === 0}
               >
                 Acheter !
               </Button>
