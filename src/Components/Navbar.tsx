@@ -27,6 +27,7 @@ const Navbar = () => {
             href="#"
             onClick={() => {
               dispatch(changePage("mainMenu"));
+              dispatch(switchDrawer());
             }}
             sx={{
               mr: 2,
