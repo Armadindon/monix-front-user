@@ -10,7 +10,8 @@ export type Pages =
   | "selectProduct"
   | "creditAccount"
   | "editAccount"
-  | "historyPanel";
+  | "historyPanel"
+  | "changePassword";
 
 export type SnackBarMessage = {
   message: string;

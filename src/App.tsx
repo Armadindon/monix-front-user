@@ -4,6 +4,7 @@ import AppDrawer from "./Components/AppDrawer";
 import Navbar from "./Components/Navbar";
 import PageNavigator from "./Components/PageNavigator";
 import { getToken } from "./Model/UserSlice";
+import ChangePassword from "./Pages/ChangePassword";
 import CreditAccount from "./Pages/CreditAccount";
 import EditAccount from "./Pages/EditAccount";
 import HistoryPanel from "./Pages/HistoryPanel";
@@ -27,6 +28,7 @@ function App() {
           creditAccount: <CreditAccount />,
           editAccount: <EditAccount />,
           historyPanel: <HistoryPanel />,
+          changePassword: <ChangePassword />,
         }}
       >
         <AppDrawer />

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AlignHorizontalLeftIcon from "@mui/icons-material/AlignHorizontalLeft";
+import PasswordIcon from "@mui/icons-material/Password";
 import {
   addSnackbarMessage,
   changePage,
@@ -52,6 +53,19 @@ const AppDrawer = () => {
               <AlignHorizontalLeftIcon />
             </ListItemIcon>
             <ListItemText primary="Historique" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => {
+              dispatch(switchDrawer());
+              dispatch(changePage("changePassword"));
+            }}
+          >
+            <ListItemIcon>
+              <PasswordIcon />
+            </ListItemIcon>
+            <ListItemText primary="Modifier son mot de passe" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
