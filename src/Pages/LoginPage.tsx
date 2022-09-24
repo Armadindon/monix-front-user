@@ -67,7 +67,7 @@ const LoginPage = () => {
       } else {
         dispatch(
           addSnackbarMessage({
-            message: "Erreur inconnue en contactan l'api",
+            message: "Erreur inconnue en contactant l'api",
             options: {
               variant: "error",
             },
@@ -140,7 +140,7 @@ const LoginPage = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2" onClick={() => dispatch(changePage("resetPasswordRequest"))}>
                 Mot de passe oublié ?
               </Link>
             </Grid>

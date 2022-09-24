@@ -11,6 +11,7 @@ import HistoryPanel from "./Pages/HistoryPanel";
 import LoginPage from "./Pages/LoginPage";
 import MainPanel from "./Pages/MainPanel";
 import ProductSelector from "./Pages/ProductSelector";
+import SendPasswordResetMail from "./Pages/SendPasswordResetMail";
 
 // On crée plusieurs contexte afin de permettre de fournir ces informations à
 
@@ -29,6 +30,7 @@ function App() {
           editAccount: <EditAccount />,
           historyPanel: <HistoryPanel />,
           changePassword: <ChangePassword />,
+          resetPasswordRequest: <SendPasswordResetMail />,
         }}
       >
         <AppDrawer />

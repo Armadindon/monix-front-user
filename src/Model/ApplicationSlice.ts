@@ -11,7 +11,8 @@ export type Pages =
   | "creditAccount"
   | "editAccount"
   | "historyPanel"
-  | "changePassword";
+  | "changePassword"
+  | "resetPasswordRequest";
 
 export type SnackBarMessage = {
   message: string;
@@ -23,13 +24,23 @@ export type ApplicationSliceState = {
   currentPage: Pages;
   openedDrawer: boolean;
   messagesToShow: SnackBarMessage[];
+  resetCode?: string;
 };
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
 
 // Define the initial state using that type
+// Si le code de reset est présent, on redirige vers la page de reset de mdp
+// sinon, on determine si l'utilisateur est connecté, si oui, mainpanel, sinon loginpanel
 const initialState: ApplicationSliceState = {
-  currentPage: getTokenFromLocalStorage() ? "mainMenu" : "login",
+  currentPage: urlParams.get("code")
+    ? "changePassword"
+    : getTokenFromLocalStorage()
+    ? "mainMenu"
+    : "login",
   openedDrawer: false,
   messagesToShow: [],
+  resetCode: urlParams.get("code") ? urlParams.get("code") + "" : undefined,
 };
 
 export const applicationSlice = createSlice({
@@ -50,6 +61,9 @@ export const applicationSlice = createSlice({
     removeFirstSnackbarMessage: (state) => {
       state.messagesToShow.shift();
     },
+    clearResetCode: (state) => {
+      delete state.resetCode;
+    },
   },
 });
 
@@ -58,6 +72,7 @@ export const {
   switchDrawer,
   addSnackbarMessage,
   removeFirstSnackbarMessage,
+  clearResetCode,
 } = applicationSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
@@ -69,5 +84,7 @@ export const isDrawerOpened = (state: RootState) =>
 
 export const getSnackbarMessages = (state: RootState) =>
   state.application.messagesToShow;
+
+export const getResetCode = (state: RootState) => state.application.resetCode;
 
 export default applicationSlice.reducer;
