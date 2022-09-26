@@ -53,7 +53,13 @@ const MainPanel = () => {
         ) : (
           <>
             Tu as {user.balance}
-            <MonixCoin style={{ marginLeft: ".25em" }} />
+            <MonixCoin
+              style={{
+                marginLeft: ".25em",
+                maxHeight: "1.25em",
+                maxWidth: "1.25em",
+              }}
+            />
           </>
         )}
       </Typography>

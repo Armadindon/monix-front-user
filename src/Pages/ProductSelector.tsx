@@ -188,7 +188,13 @@ const ProductSelector = () => {
               sx={{ display: "flex", alignItems: "center" }}
             >
               {product.attributes.price}
-              <MonixCoin style={{ marginLeft: ".25em" }} />
+              <MonixCoin
+                style={{
+                  marginLeft: ".25em",
+                  maxHeight: "1.25em",
+                  maxWidth: "1.25em",
+                }}
+              />
             </Typography>
             <Box sx={{ display: "flex" }}>
               <TextField

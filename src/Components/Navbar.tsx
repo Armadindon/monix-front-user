@@ -4,10 +4,16 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useAppDispatch } from "../hook";
-import { changePage, switchDrawer } from "../Model/ApplicationSlice";
+import {
+  changePage,
+  isDrawerOpened,
+  switchDrawer,
+} from "../Model/ApplicationSlice";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
+  const drawerOpened = useSelector(isDrawerOpened);
   return (
     <>
       <AppBar sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
@@ -27,7 +33,7 @@ const Navbar = () => {
             href="#"
             onClick={() => {
               dispatch(changePage("mainMenu"));
-              dispatch(switchDrawer());
+              if (drawerOpened) dispatch(switchDrawer());
             }}
             sx={{
               mr: 2,
