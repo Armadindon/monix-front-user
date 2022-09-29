@@ -63,6 +63,7 @@ export type History = {
     amount: number;
     createdAt: string;
     updatedAt: string;
+    date: string;
     product: {
       data: Product;
     };

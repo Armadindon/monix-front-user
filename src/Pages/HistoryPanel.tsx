@@ -66,7 +66,7 @@ const HistoryPanel = () => {
                 <TableCell sx={{ fontWeight: "bold" }}>
                   {entry.attributes.description}
                 </TableCell>
-                <TableCell>{entry.attributes.createdAt}</TableCell>
+                <TableCell>{entry.attributes.date}</TableCell>
                 <TableCell>{entry.attributes.movement}</TableCell>
                 <TableCell>
                   {entry.attributes.product?.data?.attributes?.name}
