@@ -1,17 +1,11 @@
 import React from "react";
 import { Avatar, Button, IconButton, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import {
-  useRef,
-  useState,
-} from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hook";
 import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
-import {
-  getAuthenticatedUser,
-  setAuthenticatedUser,
-} from "../Model/UserSlice";
+import { getAuthenticatedUser, setAuthenticatedUser } from "../Model/UserSlice";
 import sendApiRequest from "../Model/WebApi";
 
 const EditAccount = () => {

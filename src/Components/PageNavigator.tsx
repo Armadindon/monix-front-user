@@ -15,7 +15,9 @@ const PageNavigator = ({
 }: React.PropsWithChildren<PageNavigatorProps>) => {
   const currentPage = useSelector(getCurrentPage);
   const [inTransitionOut, setInTransitionOut] = useState(false);
-  const [currentComponent, setCurrentComponent] = useState<JSX.Element>(pages[currentPage]);
+  const [currentComponent, setCurrentComponent] = useState<JSX.Element>(
+    pages[currentPage]
+  );
 
   // At the end of the out animation, we change the component
   const onExited = () => {

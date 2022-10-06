@@ -1,8 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { store } from "../store";
-import {
-  addSnackbarMessage,
-} from "./ApplicationSlice";
+import { addSnackbarMessage } from "./ApplicationSlice";
 
 const sendApiRequest = async (request: AxiosRequestConfig) => {
   const token = store.getState().user.token;

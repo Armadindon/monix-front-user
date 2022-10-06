@@ -78,7 +78,10 @@ const BarcodeDecoder = ({
               <CameraFrontIcon htmlColor="white" />
             </IconButton>
           )}
-          <video ref={videoRef} style={{ borderRadius: "10px", maxWidth:"80vw" }} />
+          <video
+            ref={videoRef}
+            style={{ borderRadius: "10px", maxWidth: "80vw" }}
+          />
         </Box>
       )}
     </>
