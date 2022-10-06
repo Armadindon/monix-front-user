@@ -1,8 +1,7 @@
+import React from "react";
 import { Avatar, Button, IconButton, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import {
-  DetailedHTMLProps,
-  InputHTMLAttributes,
   useRef,
   useState,
 } from "react";
@@ -11,20 +10,17 @@ import { useAppDispatch } from "../hook";
 import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
 import {
   getAuthenticatedUser,
-  getToken,
   setAuthenticatedUser,
 } from "../Model/UserSlice";
-import axios from "axios";
 import sendApiRequest from "../Model/WebApi";
 
 const EditAccount = () => {
   const user = useSelector(getAuthenticatedUser);
-  const token = useSelector(getToken);
   const dispatch = useAppDispatch();
   const [editedUser, setEditedUser] = useState(user);
   const [imageFile, setImageFile] = useState<File | undefined>();
   //Grosse flemme de typer ça
-  const inputRef = useRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const editUser = async () => {
     let uploadedImageId = undefined;
@@ -87,7 +83,7 @@ const EditAccount = () => {
             hidden
           />
           {/** Todo: Faire un Joli effet pour faire comprendre que l'on peut changer son image */}
-          <IconButton onClick={() => inputRef.current.click()}>
+          <IconButton onClick={() => inputRef.current?.click()}>
             <Avatar
               sx={{ width: 128, height: 128 }}
               src={

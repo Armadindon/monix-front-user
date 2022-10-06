@@ -1,11 +1,10 @@
+import React from "react";
 import {
   Table,
   TableBody,
   TableCell,
   TableContainer,
-  TableFooter,
   TableHead,
-  TablePagination,
   TableRow,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -16,7 +15,6 @@ import { History } from "../Model/types";
 import {
   getAuthenticatedUser,
   getPersonalHistory,
-  setAuthenticatedUser,
   setPersonalHistory,
 } from "../Model/UserSlice";
 import sendApiRequest from "../Model/WebApi";
@@ -62,7 +60,7 @@ const HistoryPanel = () => {
           </TableHead>
           <TableBody>
             {history?.map((entry) => (
-              <TableRow>
+              <TableRow key={entry.id}>
                 <TableCell sx={{ fontWeight: "bold" }}>
                   {entry.attributes.description}
                 </TableCell>

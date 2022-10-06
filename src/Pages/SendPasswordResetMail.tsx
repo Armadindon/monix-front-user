@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
@@ -11,7 +12,7 @@ const SendPasswordResetMail = () => {
 
   const sendPasswordResetRequest = async () => {
     try {
-      const passwordResetRequest = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/auth/forgot-password`,
         {
           email,
@@ -28,6 +29,7 @@ const SendPasswordResetMail = () => {
           },
         })
       );
+      //eslint-disable-next-line
     } catch (error: any) {
       console.log(error);
       if (
@@ -60,8 +62,8 @@ const SendPasswordResetMail = () => {
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Typography variant="h6" sx={{ margin: "10px", textAlign: "center" }}>
-        Entrez votre email, si l'on trouve un compte associé à ce compte, nous
-        enverrons un mail de réinitialisation de mot de passe.
+        Entrez votre email, si l&apos;on trouve un compte associé à ce compte,
+        nous enverrons un mail de réinitialisation de mot de passe.
       </Typography>
       <TextField
         label="Email du compte"

@@ -1,4 +1,5 @@
-import { Button, Input, TextField, Typography } from "@mui/material";
+import React from "react";
+import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
 import { useState } from "react";
@@ -30,7 +31,7 @@ const ChangePassword = () => {
         password: newPassword,
         passwordConfirmation: newPasswordConfirmation,
       },
-    }).then((response) => {
+    }).then(() => {
       dispatch(
         addSnackbarMessage({
           message: "Mot de passe changé ! Vous avez été déconnecté",
@@ -56,7 +57,7 @@ const ChangePassword = () => {
         password: newPassword,
         passwordConfirmation: newPasswordConfirmation,
       },
-    }).then((response) => {
+    }).then(() => {
       dispatch(
         addSnackbarMessage({
           message: "Mot de passe changé ! Vous pouvez vous connecter.",

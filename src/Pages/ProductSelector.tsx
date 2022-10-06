@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, Modal, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
@@ -32,13 +33,12 @@ const ProductSelector = () => {
     }
     // Quand les produits changent, on met à jour amounts
     const newAmount = { ...amount };
-    for (let product of products) {
+    for (const product of products) {
       if (!newAmount[product.id] && product.attributes.stock !== 0)
         newAmount[product.id] = 1;
     }
     setAmount(newAmount);
     // On ignore, car on veut seulement remplir amounts dans le callback
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products]);
 
   //Update Product with filter
