@@ -6,7 +6,7 @@
     <img width="33%" src="https://raw.githubusercontent.com/ClubNix/monix-2.0/master/src/assets/monixcoin.svg"> 
 </p>
 
-Projet du club Nix permettant de gérer les stocks ainsi qu'en permettant aux membres d'acherter des produits contre des monix-coins.
+Projet du Club *Nix permettant de gérer les stocks ainsi qu'en permettant aux membres d'acherter des produits contre des monix-coins.
 
 Le projet associé au backend du projet est trouvable ici : https://github.com/ClubNix/monix-backend  
 
