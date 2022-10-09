@@ -1,0 +1,24 @@
+name: Build and Deploy docker image
+# Only build on master
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Login to Repository
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ secrets.REPOSITORY_URL }}
+        username: ${{ secrets.REPOSITORY_USERNAME }}
+        password: ${{ secrets.REPOSITORY_PASSWORD }}
+
+    - name: Create docker image
+      run: ./scripts/build-and-deploy.sh
+      env:
+        - REPOSITORY_URL: ${{ secrets.REPOSITORY_URL }}
