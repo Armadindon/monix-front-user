@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -50,6 +51,7 @@ const LoginPage = () => {
           },
         })
       );
+      //eslint-disable-next-line
     } catch (error: any) {
       console.log(error);
       if (
@@ -140,7 +142,11 @@ const LoginPage = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" onClick={() => dispatch(changePage("resetPasswordRequest"))}>
+              <Link
+                href="#"
+                variant="body2"
+                onClick={() => dispatch(changePage("resetPasswordRequest"))}
+              >
                 Mot de passe oublié ?
               </Link>
             </Grid>

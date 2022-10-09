@@ -15,7 +15,9 @@ const PageNavigator = ({
 }: React.PropsWithChildren<PageNavigatorProps>) => {
   const currentPage = useSelector(getCurrentPage);
   const [inTransitionOut, setInTransitionOut] = useState(false);
-  const [currentComponent, setCurrentComponent] = useState(pages[currentPage]);
+  const [currentComponent, setCurrentComponent] = useState<JSX.Element>(
+    pages[currentPage]
+  );
 
   // At the end of the out animation, we change the component
   const onExited = () => {
@@ -30,7 +32,6 @@ const PageNavigator = ({
       setInTransitionOut(true);
     }
     // On ignore, car on veut pas retrigger le useEffect dans le cas de changement de composant ou la liste de pages (qui est fixe logiqument)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   return (

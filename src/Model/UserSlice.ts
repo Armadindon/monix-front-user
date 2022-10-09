@@ -39,8 +39,13 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setToken, clearToken, setAuthenticatedUser, changeUserBalance, setPersonalHistory } =
-  userSlice.actions;
+export const {
+  setToken,
+  clearToken,
+  setAuthenticatedUser,
+  changeUserBalance,
+  setPersonalHistory,
+} = userSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const getToken = (state: RootState) => state.user.token;

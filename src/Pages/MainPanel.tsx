@@ -1,3 +1,4 @@
+import React from "react";
 import { Avatar, Button, Skeleton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect } from "react";
@@ -21,7 +22,6 @@ const MainPanel = () => {
       );
     }
     // On ignore, car on veut pas retrigger le useEffect en changement de dispatch (wtf)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (

@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserMultiFormatReader } from "@zxing/library";
 import { useEffect, useRef, useState } from "react";
 
@@ -24,7 +25,7 @@ const BarcodeDecoder = ({
   const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>();
   const [selectedVideoDevice, setSelectedVideoDevice] = useState<number>(0);
   const [videoPermission, setVideoPermission] = useState(false);
-  const videoRef = useRef<any>();
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     navigator.mediaDevices
@@ -46,7 +47,7 @@ const BarcodeDecoder = ({
     codeReader.decodeFromVideoDevice(
       videoDevices[selectedVideoDevice].deviceId,
       videoRef.current as HTMLVideoElement,
-      (result, err) => {
+      (result) => {
         if (!result) return;
         onResult({
           barcode: result.getText(),
@@ -77,7 +78,10 @@ const BarcodeDecoder = ({
               <CameraFrontIcon htmlColor="white" />
             </IconButton>
           )}
-          <video ref={videoRef} style={{ borderRadius: "10px", maxWidth:"80vw" }} />
+          <video
+            ref={videoRef}
+            style={{ borderRadius: "10px", maxWidth: "80vw" }}
+          />
         </Box>
       )}
     </>

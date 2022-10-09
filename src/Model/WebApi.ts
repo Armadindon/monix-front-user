@@ -1,11 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { store } from "../store";
-import {
-  addSnackbarMessage,
-  removeFirstSnackbarMessage,
-} from "./ApplicationSlice";
+import { addSnackbarMessage } from "./ApplicationSlice";
 
-const sendApiRequest = async (request: AxiosRequestConfig<any>) => {
+const sendApiRequest = async (request: AxiosRequestConfig) => {
   const token = store.getState().user.token;
   try {
     const result = await axios({
@@ -14,6 +11,7 @@ const sendApiRequest = async (request: AxiosRequestConfig<any>) => {
       headers: { ...request.headers, Authorization: `Bearer ${token}` },
     });
     return result;
+    // eslint-disable-next-line
   } catch (error: any) {
     console.log(error);
     if (

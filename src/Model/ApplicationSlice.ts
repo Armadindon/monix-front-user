@@ -1,8 +1,7 @@
 import { RootState } from "../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getTokenFromLocalStorage } from "./tokenManager";
-import { OptionsObject, SnackbarKey } from "notistack";
-import { Snackbar } from "@mui/material";
+import { OptionsObject } from "notistack";
 
 export type Pages =
   | "login"
