@@ -1,5 +1,16 @@
 import React from "react";
-import { Button, Modal, Paper, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Modal,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -19,6 +30,7 @@ const ProductSelector = () => {
   const [displayedProducts, setDisplayedProducts] = useState(products);
   const [productFilter, setProductFilter] = useState("");
   const [scannerModalOpened, setScannerModalOpened] = useState(false);
+  const [warnedProduct, setWarnedProduct] = useState<Product | undefined>();
 
   //On crée un state "dictionnaire" ou pour chaque id de produit on met le montant dans l'input
   const [amount, setAmount] = useState<{ [productId in number]: number }>({});
@@ -35,8 +47,7 @@ const ProductSelector = () => {
     // Quand les produits changent, on met à jour amounts
     const newAmount = { ...amount };
     for (const product of products) {
-      if (!newAmount[product.id] && product.attributes.stock !== 0)
-        newAmount[product.id] = 1;
+      if (!newAmount[product.id]) newAmount[product.id] = 1;
     }
     setAmount(newAmount);
     // On ignore, car on veut seulement remplir amounts dans le callback
@@ -110,6 +121,35 @@ const ProductSelector = () => {
         />
       </Modal>
 
+      {/** Modal de warning quand le produit ne semble pas en stock */}
+      <Dialog
+        open={warnedProduct !== undefined}
+        onClose={() => setWarnedProduct(undefined)}
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
+        <DialogTitle>Pas de stocks disponibles</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Le produit selectionné ne semble pas avoir assez de stocks, êtes
+            vous vraiment sûr de vouloir l&apos;acheter ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setWarnedProduct(undefined)}>Annuler</Button>
+          <Button
+            onClick={() => {
+              if (warnedProduct)
+                buyproduct(warnedProduct, amount[warnedProduct.id]);
+              setWarnedProduct(undefined);
+            }}
+            autoFocus
+            color="warning"
+          >
+            Confirmer
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Button
         sx={{ marginTop: "15px", width: "80vw" }}
         variant="contained"
@@ -140,25 +180,6 @@ const ProductSelector = () => {
           }}
         >
           {/** Si le produit n'est Plus en stock, on informe l'utilisateur */}
-          {product.attributes.stock === 0 && (
-            <Paper
-              sx={{
-                zIndex: 1000,
-                position: "absolute",
-                display: "flex",
-                backgroundColor: "#000",
-                opacity: 0.8,
-                height: "600px",
-                width: "80vw",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h3" color="white">
-                Plus de stock
-              </Typography>
-            </Paper>
-          )}
           {/** Note a soi même : je deteste le mec qui a rendu les api ultra compliqué chez strapi :c */}
           <Box
             sx={{
@@ -199,12 +220,11 @@ const ProductSelector = () => {
             </Typography>
             <Box sx={{ display: "flex" }}>
               <TextField
-                disabled={product.attributes.stock === 0}
                 label="Nombre"
                 sx={{ m: 1 }}
                 InputProps={{
                   type: "number",
-                  inputProps: { min: 1, max: product.attributes.stock },
+                  inputProps: { min: 1 },
                 }}
                 value={
                   amount[product.id] !== undefined ? amount[product.id] : 0
@@ -216,8 +236,13 @@ const ProductSelector = () => {
                 }}
               />
               <Button
-                onClick={() => buyproduct(product, amount[product.id])}
-                disabled={product.attributes.stock === 0}
+                onClick={() => {
+                  if (amount[product.id] < product.attributes.stock)
+                    buyproduct(product, amount[product.id]);
+                  else {
+                    setWarnedProduct(product);
+                  }
+                }}
               >
                 Acheter !
               </Button>
