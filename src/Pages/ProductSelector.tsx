@@ -11,6 +11,7 @@ import { Product } from "../Model/types";
 import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
 import sendApiRequest from "../Model/WebApi";
 import BarcodeDecoder from "../Components/BarcodeDecoder";
+import config from "../config";
 
 const ProductSelector = () => {
   const dispatch = useAppDispatch();
@@ -168,7 +169,7 @@ const ProductSelector = () => {
             }}
           >
             <img
-              src={`${process.env.REACT_APP_BACKEND_URL}${product.attributes.image.data.attributes.url}`}
+              src={`${config.urlBackend}${product.attributes.image.data.attributes.url}`}
               style={{
                 margin: "10px",
                 maxHeight: "300px",

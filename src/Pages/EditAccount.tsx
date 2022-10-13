@@ -7,6 +7,7 @@ import { useAppDispatch } from "../hook";
 import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
 import { getAuthenticatedUser, setAuthenticatedUser } from "../Model/UserSlice";
 import sendApiRequest from "../Model/WebApi";
+import config from "../config";
 
 const EditAccount = () => {
   const user = useSelector(getAuthenticatedUser);
@@ -83,7 +84,7 @@ const EditAccount = () => {
               src={
                 imageFile
                   ? URL.createObjectURL(imageFile)
-                  : `${process.env.REACT_APP_BACKEND_URL}${editedUser.avatar?.url}`
+                  : `${config.urlBackend}${editedUser.avatar?.url}`
               }
             />
           </IconButton>

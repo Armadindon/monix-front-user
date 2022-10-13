@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useAppDispatch } from "../hook";
 import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
+import config from "../config";
 
 const SendPasswordResetMail = () => {
   const [email, setEmail] = useState("");
@@ -12,12 +13,9 @@ const SendPasswordResetMail = () => {
 
   const sendPasswordResetRequest = async () => {
     try {
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/auth/forgot-password`,
-        {
-          email,
-        }
-      );
+      await axios.post(`${config.urlBackend}/api/auth/forgot-password`, {
+        email,
+      });
       //On change l'utilisateur de page
       dispatch(changePage("login"));
       dispatch(

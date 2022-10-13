@@ -17,6 +17,7 @@ import { useAppDispatch } from "../hook";
 import { setToken } from "../Model/UserSlice";
 import { setToken as setTokenLocal } from "../Model/tokenManager";
 import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
+import config from "../config";
 
 const LoginPage = () => {
   const [login, setLogin] = useState("");
@@ -31,7 +32,7 @@ const LoginPage = () => {
     // Note pour cet appel api, on utilise pas WebApi.ts, car celui-ci dépend sur le token, or, ici on fetch le token
     try {
       const loginResponse = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/auth/local`,
+        `${config.urlBackend}/api/auth/local`,
         {
           identifier: login,
           password: password,

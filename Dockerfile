@@ -16,5 +16,6 @@ FROM nginx:stable-alpine
 LABEL org.opencontainers.image.source https://github.com/ClubNix/monix-2.0
 
 COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/start.sh /app/
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["sh", "-c", "/app/start.sh"]
