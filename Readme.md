@@ -22,8 +22,6 @@ Pour utiliser le registry github, il est nécéssaire de [se connecter](https://
 Une variables d'environnement est nécéssaire à son utilisation:
 - `BACKEND_URL` : Adresse du backend (par défaut, https://localhost:1337)
 
-Si vous utilisez la version avec l'adresse de backend set dans le projet, vous pouvez utiliser le
-
 
 ## Développement
 
