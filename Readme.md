@@ -15,9 +15,12 @@ La version 1.5 (version intermédiaire) est également consultatble [ici](https:
 
 ## Installation
 
-Pour utiliser l'application, il est nécéssaire de la build par soi-même en utilisant la commande: 
-`REACT_APP_BACKEND_URL=<VOTRE_BACKEND_SANS_SLASH> docker build . -t monix-front-user`<br>
-(Ceci est dû au fait que React utilise les variables d'environnement au moment du build).  
+Un docker est associé à ce projet, il est trouvable [ici](https://github.com/ClubNix/monix-2.0/pkgs/container/monix-2.0).
+
+Pour utiliser le registry github, il est nécéssaire de [se connecter](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) avant !
+
+Une variables d'environnement est nécéssaire à son utilisation:
+- `BACKEND_URL` : Adresse du backend (par défaut, https://localhost:1337)
 
 Si vous utilisez la version avec l'adresse de backend set dans le projet, vous pouvez utiliser le
 
