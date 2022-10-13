@@ -35,8 +35,7 @@ const ProductSelector = () => {
     // Quand les produits changent, on met à jour amounts
     const newAmount = { ...amount };
     for (const product of products) {
-      if (!newAmount[product.id] && product.attributes.stock !== 0)
-        newAmount[product.id] = 1;
+      if (!newAmount[product.id]) newAmount[product.id] = 1;
     }
     setAmount(newAmount);
     // On ignore, car on veut seulement remplir amounts dans le callback
@@ -140,25 +139,6 @@ const ProductSelector = () => {
           }}
         >
           {/** Si le produit n'est Plus en stock, on informe l'utilisateur */}
-          {product.attributes.stock === 0 && (
-            <Paper
-              sx={{
-                zIndex: 1000,
-                position: "absolute",
-                display: "flex",
-                backgroundColor: "#000",
-                opacity: 0.8,
-                height: "600px",
-                width: "80vw",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h3" color="white">
-                Plus de stock
-              </Typography>
-            </Paper>
-          )}
           {/** Note a soi même : je deteste le mec qui a rendu les api ultra compliqué chez strapi :c */}
           <Box
             sx={{
@@ -199,12 +179,11 @@ const ProductSelector = () => {
             </Typography>
             <Box sx={{ display: "flex" }}>
               <TextField
-                disabled={product.attributes.stock === 0}
                 label="Nombre"
                 sx={{ m: 1 }}
                 InputProps={{
                   type: "number",
-                  inputProps: { min: 1, max: product.attributes.stock },
+                  inputProps: { min: 1 },
                 }}
                 value={
                   amount[product.id] !== undefined ? amount[product.id] : 0
@@ -215,10 +194,7 @@ const ProductSelector = () => {
                   setAmount(newAmount);
                 }}
               />
-              <Button
-                onClick={() => buyproduct(product, amount[product.id])}
-                disabled={product.attributes.stock === 0}
-              >
+              <Button onClick={() => buyproduct(product, amount[product.id])}>
                 Acheter !
               </Button>
             </Box>
