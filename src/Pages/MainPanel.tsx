@@ -8,6 +8,7 @@ import { changePage } from "../Model/ApplicationSlice";
 import { getAuthenticatedUser, setAuthenticatedUser } from "../Model/UserSlice";
 import sendApiRequest from "../Model/WebApi";
 import { ReactComponent as MonixCoin } from "./../assets/monixcoin.svg";
+import config from "../config";
 
 const MainPanel = () => {
   const dispatch = useAppDispatch();
@@ -44,7 +45,7 @@ const MainPanel = () => {
       ) : (
         <Avatar
           sx={{ width: 128, height: 128 }}
-          src={`${process.env.REACT_APP_BACKEND_URL}${user.avatar?.url}`}
+          src={`${config.urlBackend}${user.avatar?.url}`}
         />
       )}
       <Typography variant="h5" sx={{ display: "flex", alignItems: "center" }}>

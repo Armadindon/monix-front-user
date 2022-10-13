@@ -14,6 +14,7 @@ import {
 import { clearTokenFromLocalStorage } from "../Model/tokenManager";
 import { clearToken } from "../Model/UserSlice";
 import sendApiRequest from "../Model/WebApi";
+import config from "../config";
 
 const ChangePassword = () => {
   const dispatch = useAppDispatch();
@@ -49,7 +50,7 @@ const ChangePassword = () => {
   const sendPasswordReset = () => {
     if (!code) return;
     axios({
-      baseURL: `${process.env.REACT_APP_BACKEND_URL}/api`,
+      baseURL: `${config.urlBackend}/api`,
       url: "/auth/reset-password",
       method: "POST",
       data: {
