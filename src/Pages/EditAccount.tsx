@@ -18,33 +18,30 @@ const EditAccount = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const editUser = async () => {
-    let uploadedImageId = undefined;
     //On commence par uploader l'image
     if (imageFile) {
       console.log("On upload un fichier");
       const data = new FormData();
-      data.append("files", imageFile);
+      data.append("avatar", imageFile);
 
       const result = await sendApiRequest({
-        url: "/upload",
+        url: "/users/uploadAvatar",
         data,
         method: "POST",
       });
       console.log(result?.data);
-      uploadedImageId = result?.data[0].id;
     }
 
     //Puis on update le profil
     sendApiRequest({
       url: "/users/me",
-      method: "POST",
+      method: "PUT",
       data: {
         username: editedUser?.username,
         email: editedUser?.email,
-        avatar: uploadedImageId,
       },
     }).then((response) => {
-      if (response) dispatch(setAuthenticatedUser(response?.data));
+      if (response) dispatch(setAuthenticatedUser(response?.data?.data));
       dispatch(changePage("mainMenu"));
       dispatch(
         addSnackbarMessage({
@@ -70,7 +67,7 @@ const EditAccount = () => {
           <input
             ref={inputRef}
             type="file"
-            accept="image/*"
+            accept="image/png"
             onChange={(evt) => {
               if (evt.currentTarget.files)
                 setImageFile(evt.currentTarget.files[0]);
@@ -84,7 +81,7 @@ const EditAccount = () => {
               src={
                 imageFile
                   ? URL.createObjectURL(imageFile)
-                  : `${config.urlBackend}${editedUser.avatar?.url}`
+                  : `${config.urlBackend}/images/${editedUser.avatar}`
               }
             />
           </IconButton>

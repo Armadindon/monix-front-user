@@ -32,13 +32,13 @@ const LoginPage = () => {
     // Note pour cet appel api, on utilise pas WebApi.ts, car celui-ci dépend sur le token, or, ici on fetch le token
     try {
       const loginResponse = await axios.post(
-        `${config.urlBackend}/api/auth/local`,
+        `${config.urlBackend}/auth/login`,
         {
-          identifier: login,
+          username: login,
           password: password,
         }
       );
-      const jwtToken = loginResponse.data.jwt;
+      const jwtToken = loginResponse.data?.data?.token;
       dispatch(setToken(jwtToken));
       // Si l'utilisateur demande a qu'on se rappelle de sa connexion, on stocke dans le localstorage
       if (rememberMe) setTokenLocal(jwtToken);

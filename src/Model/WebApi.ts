@@ -8,7 +8,7 @@ const sendApiRequest = async (request: AxiosRequestConfig) => {
   try {
     const result = await axios({
       ...request,
-      baseURL: `${config.urlBackend}/api`,
+      baseURL: `${config.urlBackend}/`,
       headers: { ...request.headers, Authorization: `Bearer ${token}` },
     });
     return result;
@@ -30,7 +30,7 @@ const sendApiRequest = async (request: AxiosRequestConfig) => {
     } else {
       store.dispatch(
         addSnackbarMessage({
-          message: "Erreur inconnue en contactan l'api",
+          message: "Erreur inconnue en contactant l'api",
           options: {
             variant: "error",
           },

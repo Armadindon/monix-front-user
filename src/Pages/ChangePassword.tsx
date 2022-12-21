@@ -25,11 +25,11 @@ const ChangePassword = () => {
 
   const sendPasswordChange = () => {
     sendApiRequest({
-      url: "/auth/change-password",
+      url: "/users/changePassword",
       method: "POST",
       data: {
-        currentPassword,
-        password: newPassword,
+        oldPassword: currentPassword,
+        newPassword: newPassword,
         passwordConfirmation: newPasswordConfirmation,
       },
     }).then(() => {

@@ -16,11 +16,9 @@ const MainPanel = () => {
 
   useEffect(() => {
     if (!user) {
-      sendApiRequest({ url: "/users/me?populate=avatar", method: "GET" }).then(
-        (response) => {
-          if (response) dispatch(setAuthenticatedUser(response.data));
-        }
-      );
+      sendApiRequest({ url: "/users/me", method: "GET" }).then((response) => {
+        if (response) dispatch(setAuthenticatedUser(response.data?.data));
+      });
     }
     // On ignore, car on veut pas retrigger le useEffect en changement de dispatch (wtf)
   }, [user]);
@@ -45,7 +43,7 @@ const MainPanel = () => {
       ) : (
         <Avatar
           sx={{ width: 128, height: 128 }}
-          src={`${config.urlBackend}${user.avatar?.url}`}
+          src={`${config.urlBackend}/images/${user.avatar}`}
         />
       )}
       <Typography variant="h5" sx={{ display: "flex", alignItems: "center" }}>

@@ -12,6 +12,16 @@ const SendPasswordResetMail = () => {
   const dispatch = useAppDispatch();
 
   const sendPasswordResetRequest = async () => {
+    dispatch(
+      addSnackbarMessage({
+        message:
+          "La fonctionnalité n'as pas encore été intégré au nouveau backend",
+        options: {
+          variant: "error",
+        },
+      })
+    );
+    return;
     try {
       await axios.post(`${config.urlBackend}/api/auth/forgot-password`, {
         email,

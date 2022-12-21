@@ -13,7 +13,7 @@ const CreditAccount = () => {
 
   const credit = (amount: number) => {
     sendApiRequest({
-      url: "/credit",
+      url: "/balance/recharge",
       method: "POST",
       data: {
         amount: amount,

@@ -12,32 +12,27 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hook";
 import { History } from "../Model/types";
-import {
-  getAuthenticatedUser,
-  getPersonalHistory,
-  setPersonalHistory,
-} from "../Model/UserSlice";
+import { getPersonalHistory, setPersonalHistory } from "../Model/UserSlice";
 import sendApiRequest from "../Model/WebApi";
 
 const HistoryPanel = () => {
   const dispatch = useAppDispatch();
   const history = useSelector(getPersonalHistory);
-  const user = useSelector(getAuthenticatedUser);
 
   //TODO: Gérer la pagination -> Pour le moment on récupère les 25 dernières entrées
 
   useEffect(() => {
     if (history == undefined) {
       sendApiRequest({
-        url: `/histories?populate=product&filters[user][id][$eq]=${user?.id}`,
+        url: `/history/myHistory`,
       }).then((response) => {
         const data: History[] = response?.data.data;
         dispatch(
           setPersonalHistory(
             data.sort(
               (a, b) =>
-                new Date(b.attributes.createdAt).getTime() -
-                new Date(a.attributes.createdAt).getTime()
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
             )
           )
         );
@@ -62,13 +57,11 @@ const HistoryPanel = () => {
             {history?.map((entry) => (
               <TableRow key={entry.id}>
                 <TableCell sx={{ fontWeight: "bold" }}>
-                  {entry.attributes.description}
+                  {entry.description}
                 </TableCell>
-                <TableCell>{entry.attributes.date}</TableCell>
-                <TableCell>{entry.attributes.movement}</TableCell>
-                <TableCell>
-                  {entry.attributes.product?.data?.attributes?.name}
-                </TableCell>
+                <TableCell>{entry.date}</TableCell>
+                <TableCell>{entry.movement}</TableCell>
+                <TableCell>{entry.Product?.name}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -38,11 +38,9 @@ const ProductSelector = () => {
   useEffect(() => {
     //TODO: Mettre plutot à nul dans l'initialState
     if (!products.length) {
-      sendApiRequest({ url: "/products?populate=*", method: "GET" }).then(
-        (response) => {
-          if (response) dispatch(setProducts(response.data.data));
-        }
-      );
+      sendApiRequest({ url: "/products", method: "GET" }).then((response) => {
+        if (response) dispatch(setProducts(response.data.data));
+      });
     }
     // Quand les produits changent, on met à jour amounts
     const newAmount = { ...amount };
@@ -57,7 +55,7 @@ const ProductSelector = () => {
   useEffect(() => {
     setDisplayedProducts(
       products.filter((prod) =>
-        prod.attributes.name
+        prod.name
           .toLocaleLowerCase()
           .includes(productFilter.toLocaleLowerCase())
       )
@@ -65,17 +63,18 @@ const ProductSelector = () => {
   }, [products, productFilter]);
 
   const buyproduct = (product: Product, amount: number) => {
+    console.log(product);
     sendApiRequest({
-      url: "/buy",
+      url: "/balance/buy",
       method: "POST",
       data: {
-        product: product.id,
+        productId: product.id,
         amount: amount,
       },
     }).then((response) => {
       //TODO: Ajouter un toast pour le feedback
       if (!response) return;
-      dispatch(changeUserBalance(-product.attributes.price * amount));
+      dispatch(changeUserBalance(-product.price * amount));
       dispatch(changePage("mainMenu"));
       dispatch(
         addSnackbarMessage({
@@ -105,7 +104,7 @@ const ProductSelector = () => {
           onResult={(result) => {
             console.log(result);
             const filteredResults = displayedProducts.filter(
-              (product) => product.attributes.barcode === result.barcode
+              (product) => product.barcode === result.barcode
             );
             if (filteredResults.length > 0) {
               setDisplayedProducts(filteredResults);
@@ -190,7 +189,7 @@ const ProductSelector = () => {
             }}
           >
             <img
-              src={`${config.urlBackend}${product.attributes.image.data.attributes.url}`}
+              src={`${config.urlBackend}/images/${product.image}`}
               style={{
                 margin: "10px",
                 maxHeight: "300px",
@@ -199,17 +198,17 @@ const ProductSelector = () => {
                 height: "auto",
                 alignSelf: "center",
               }}
-              alt={product.attributes.name}
+              alt={product.name}
             />
           </Box>
 
           <Box sx={{ alignSelf: "flex-start", margin: "10px" }}>
-            <Typography variant="h5">{product.attributes.name}</Typography>
+            <Typography variant="h5">{product.name}</Typography>
             <Typography
               variant="h6"
               sx={{ display: "flex", alignItems: "center" }}
             >
-              {product.attributes.price}
+              {product.price}
               <MonixCoin
                 style={{
                   marginLeft: ".25em",
@@ -237,7 +236,7 @@ const ProductSelector = () => {
               />
               <Button
                 onClick={() => {
-                  if (amount[product.id] < product.attributes.stock)
+                  if (amount[product.id] < product.stock)
                     buyproduct(product, amount[product.id]);
                   else {
                     setWarnedProduct(product);
