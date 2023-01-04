@@ -16,12 +16,12 @@ const sendApiRequest = async (request: AxiosRequestConfig) => {
   } catch (error: any) {
     console.log(error);
     if (
-      error?.response?.data?.error &&
-      typeof error?.response?.data?.error == "string"
+      error?.response?.data?.message &&
+      typeof error?.response?.data?.message == "string"
     ) {
       store.dispatch(
         addSnackbarMessage({
-          message: error.response.data.error,
+          message: error.response.data.message,
           options: {
             variant: "error",
           },

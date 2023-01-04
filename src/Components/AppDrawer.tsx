@@ -13,6 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AlignHorizontalLeftIcon from "@mui/icons-material/AlignHorizontalLeft";
 import PasswordIcon from "@mui/icons-material/Password";
+import HomeIcon from "@mui/icons-material/Home";
 import {
   addSnackbarMessage,
   changePage,
@@ -30,6 +31,19 @@ const AppDrawer = () => {
     <Drawer open={drawerOpened} onClose={() => dispatch(switchDrawer())}>
       <Toolbar />
       <List>
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => {
+              dispatch(changePage("mainMenu"));
+              dispatch(switchDrawer());
+            }}
+          >
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Accueil" />
+          </ListItemButton>
+        </ListItem>
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {

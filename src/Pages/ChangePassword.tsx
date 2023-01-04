@@ -23,16 +23,17 @@ const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirmation, setnewPasswordConfirmation] = useState("");
 
-  const sendPasswordChange = () => {
-    sendApiRequest({
-      url: "/users/changePassword",
-      method: "POST",
-      data: {
-        oldPassword: currentPassword,
-        newPassword: newPassword,
-        passwordConfirmation: newPasswordConfirmation,
-      },
-    }).then(() => {
+  const sendPasswordChange = async () => {
+    try {
+      await sendApiRequest({
+        url: "/users/changePassword",
+        method: "POST",
+        data: {
+          oldPassword: currentPassword,
+          newPassword: newPassword,
+          passwordConfirmation: newPasswordConfirmation,
+        },
+      });
       dispatch(
         addSnackbarMessage({
           message: "Mot de passe changé ! Vous avez été déconnecté",
@@ -44,21 +45,47 @@ const ChangePassword = () => {
       dispatch(clearToken());
       clearTokenFromLocalStorage();
       dispatch(changePage("login"));
-    });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error);
+      if (
+        error?.response?.data?.message &&
+        typeof error?.response?.data?.message == "string"
+      ) {
+        dispatch(
+          addSnackbarMessage({
+            message: error.response.data.message,
+            options: {
+              variant: "error",
+            },
+          })
+        );
+      } else {
+        dispatch(
+          addSnackbarMessage({
+            message: "Erreur inconnue en contactant l'api",
+            options: {
+              variant: "error",
+            },
+          })
+        );
+      }
+    }
   };
 
-  const sendPasswordReset = () => {
+  const sendPasswordReset = async () => {
     if (!code) return;
-    axios({
-      baseURL: `${config.urlBackend}`,
-      url: "/auth/resetPassword",
-      method: "POST",
-      data: {
-        code,
-        newPassword: newPassword,
-        passwordConfirmation: newPasswordConfirmation,
-      },
-    }).then(() => {
+    try {
+      await axios({
+        baseURL: `${config.urlBackend}`,
+        url: "/auth/resetPassword",
+        method: "POST",
+        data: {
+          code,
+          newPassword: newPassword,
+          passwordConfirmation: newPasswordConfirmation,
+        },
+      });
       dispatch(
         addSnackbarMessage({
           message: "Mot de passe changé ! Vous pouvez vous connecter.",
@@ -71,7 +98,32 @@ const ChangePassword = () => {
       dispatch(clearResetCode());
       // Si on a un code, on redirige l'utilisateurs
       window.history.pushState("monix", "", "/");
-    });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error);
+      if (
+        error?.response?.data?.message &&
+        typeof error?.response?.data?.message == "string"
+      ) {
+        dispatch(
+          addSnackbarMessage({
+            message: error.response.data.message,
+            options: {
+              variant: "error",
+            },
+          })
+        );
+      } else {
+        dispatch(
+          addSnackbarMessage({
+            message: "Erreur inconnue en contactant l'api",
+            options: {
+              variant: "error",
+            },
+          })
+        );
+      }
+    }
   };
 
   return (

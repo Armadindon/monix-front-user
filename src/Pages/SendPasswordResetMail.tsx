@@ -31,12 +31,12 @@ const SendPasswordResetMail = () => {
     } catch (error: any) {
       console.log(error);
       if (
-        error?.response?.data?.error?.message &&
-        typeof error?.response?.data?.error?.message == "string"
+        error?.response?.data?.message &&
+        typeof error?.response?.data?.message == "string"
       ) {
         dispatch(
           addSnackbarMessage({
-            message: error.response.data.error.message,
+            message: error.response.data.message,
             options: {
               variant: "error",
             },
