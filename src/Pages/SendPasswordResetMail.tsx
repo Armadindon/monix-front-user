@@ -8,23 +8,13 @@ import { addSnackbarMessage, changePage } from "../Model/ApplicationSlice";
 import config from "../config";
 
 const SendPasswordResetMail = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const dispatch = useAppDispatch();
 
   const sendPasswordResetRequest = async () => {
-    dispatch(
-      addSnackbarMessage({
-        message:
-          "La fonctionnalité n'as pas encore été intégré au nouveau backend",
-        options: {
-          variant: "error",
-        },
-      })
-    );
-    return;
     try {
-      await axios.post(`${config.urlBackend}/api/auth/forgot-password`, {
-        email,
+      await axios.post(`${config.urlBackend}/auth/forgottenPassword`, {
+        username,
       });
       //On change l'utilisateur de page
       dispatch(changePage("login"));
@@ -70,16 +60,16 @@ const SendPasswordResetMail = () => {
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Typography variant="h6" sx={{ margin: "10px", textAlign: "center" }}>
-        Entrez votre email, si l&apos;on trouve un compte associé à ce compte,
-        nous enverrons un mail de réinitialisation de mot de passe.
+        Entrez votre nom d&apos;utilisateur, si l&apos;on trouve un compte
+        associé à ce compte, nous enverrons un mail de réinitialisation de mot
+        de passe.
       </Typography>
       <TextField
-        label="Email du compte"
+        label="Nom d'utilisateur"
         variant="outlined"
-        type="email"
         sx={{ margin: "10px", width: "40ch" }}
-        value={email}
-        onChange={(evt) => setEmail(evt.currentTarget.value)}
+        value={username}
+        onChange={(evt) => setUsername(evt.currentTarget.value)}
       />
       <Button
         color="warning"

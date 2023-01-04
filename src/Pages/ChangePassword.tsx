@@ -50,12 +50,12 @@ const ChangePassword = () => {
   const sendPasswordReset = () => {
     if (!code) return;
     axios({
-      baseURL: `${config.urlBackend}/api`,
-      url: "/auth/reset-password",
+      baseURL: `${config.urlBackend}`,
+      url: "/auth/resetPassword",
       method: "POST",
       data: {
         code,
-        password: newPassword,
+        newPassword: newPassword,
         passwordConfirmation: newPasswordConfirmation,
       },
     }).then(() => {
