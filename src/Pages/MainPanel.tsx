@@ -51,7 +51,7 @@ const MainPanel = () => {
           <Skeleton width="40vw" />
         ) : (
           <>
-            Tu as {user.balance}
+            Tu as {user.balance.toFixed(1)}
             <MonixCoin
               style={{
                 marginLeft: ".25em",
