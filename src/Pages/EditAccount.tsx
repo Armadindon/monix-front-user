@@ -1,5 +1,11 @@
 import React from "react";
-import { Avatar, Button, IconButton, TextField } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -14,8 +20,24 @@ const EditAccount = () => {
   const dispatch = useAppDispatch();
   const [editedUser, setEditedUser] = useState(user);
   const [imageFile, setImageFile] = useState<File | undefined>();
+  const [code, setCode] = useState<undefined | string>();
   //Grosse flemme de typer ça
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const generatePersonalCode = async () => {
+    const response = await sendApiRequest({
+      url: "/users/generateCode",
+      method: "POST",
+    });
+    if (response) setCode(response?.data?.data.code);
+    dispatch(
+      addSnackbarMessage({
+        message:
+          "Code personnel généré ! ⚠️ ATTENTION: IL NE SERA PAS REAFFICHE LA PROCHAINE FOIS, NOTEZ LE BIEN ! ⚠️ ",
+        options: { variant: "success" },
+      })
+    );
+  };
 
   const editUser = async () => {
     //On commence par uploader l'image
@@ -117,6 +139,20 @@ const EditAccount = () => {
           >
             Modifier mes informations !
           </Button>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ margin: "20px" }}
+            onClick={generatePersonalCode}
+          >
+            Générer mon code personnel !
+          </Button>
+
+          {code && (
+            <Typography variant="h4" sx={{ margin: "20px", marginTop: "30px" }}>
+              {code}
+            </Typography>
+          )}
         </Box>
       )}
     </>

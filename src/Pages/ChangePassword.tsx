@@ -24,53 +24,26 @@ const ChangePassword = () => {
   const [newPasswordConfirmation, setnewPasswordConfirmation] = useState("");
 
   const sendPasswordChange = async () => {
-    try {
-      await sendApiRequest({
-        url: "/users/changePassword",
-        method: "POST",
-        data: {
-          oldPassword: currentPassword,
-          newPassword: newPassword,
-          passwordConfirmation: newPasswordConfirmation,
+    await sendApiRequest({
+      url: "/users/changePassword",
+      method: "POST",
+      data: {
+        oldPassword: currentPassword,
+        newPassword: newPassword,
+        passwordConfirmation: newPasswordConfirmation,
+      },
+    });
+    dispatch(
+      addSnackbarMessage({
+        message: "Mot de passe changé ! Vous avez été déconnecté",
+        options: {
+          variant: "success",
         },
-      });
-      dispatch(
-        addSnackbarMessage({
-          message: "Mot de passe changé ! Vous avez été déconnecté",
-          options: {
-            variant: "success",
-          },
-        })
-      );
-      dispatch(clearToken());
-      clearTokenFromLocalStorage();
-      dispatch(changePage("login"));
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      console.log(error);
-      if (
-        error?.response?.data?.message &&
-        typeof error?.response?.data?.message == "string"
-      ) {
-        dispatch(
-          addSnackbarMessage({
-            message: error.response.data.message,
-            options: {
-              variant: "error",
-            },
-          })
-        );
-      } else {
-        dispatch(
-          addSnackbarMessage({
-            message: "Erreur inconnue en contactant l'api",
-            options: {
-              variant: "error",
-            },
-          })
-        );
-      }
-    }
+      })
+    );
+    dispatch(clearToken());
+    clearTokenFromLocalStorage();
+    dispatch(changePage("login"));
   };
 
   const sendPasswordReset = async () => {
