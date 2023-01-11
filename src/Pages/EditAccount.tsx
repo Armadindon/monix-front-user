@@ -89,7 +89,7 @@ const EditAccount = () => {
           <input
             ref={inputRef}
             type="file"
-            accept="image/png"
+            accept="image/png, image/jpeg"
             onChange={(evt) => {
               if (evt.currentTarget.files)
                 setImageFile(evt.currentTarget.files[0]);
