@@ -137,7 +137,7 @@ const EditAccount = () => {
             sx={{ margin: "20px" }}
             onClick={editUser}
           >
-            Modifier mes informations !
+            Enregistrer mon profil
           </Button>
           <Button
             variant="contained"
