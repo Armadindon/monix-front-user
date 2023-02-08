@@ -163,92 +163,103 @@ const ProductSelector = () => {
         value={productFilter}
         onChange={(evt) => setProductFilter(evt.currentTarget.value)}
       />
-      {displayedProducts.map((product) => (
-        <Paper
-          key={product.id}
-          elevation={5}
-          sx={{
-            width: "80vw",
-            height: "600px",
-            display: "flex",
-            alignContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "space-between",
-            margin: "10px",
-          }}
-        >
-          {/** Si le produit n'est Plus en stock, on informe l'utilisateur */}
-          {/** Note a soi même : je deteste le mec qui a rendu les api ultra compliqué chez strapi :c */}
-          <Box
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: "80%",
+          justifyContent: "space-around",
+          margin: "5px",
+        }}
+      >
+        {displayedProducts.map((product) => (
+          <Paper
+            key={product.id}
+            elevation={5}
             sx={{
+              width: "30%",
+              minWidth: "300px !important",
+              height: "600px",
               display: "flex",
-              height: "400px",
-              justifyContent: "center",
+              alignContent: "center",
+              flexDirection: "column",
               alignItems: "center",
+              justifyContent: "space-between",
+              margin: "10px",
             }}
           >
-            <img
-              src={`${config.urlBackend}/images/${product.image}`}
-              style={{
-                margin: "10px",
-                maxHeight: "300px",
-                maxWidth: "50vw",
-                width: "auto",
-                height: "auto",
-                alignSelf: "center",
+            {/** Si le produit n'est Plus en stock, on informe l'utilisateur */}
+            {/** Note a soi même : je deteste le mec qui a rendu les api ultra compliqué chez strapi :c */}
+            <Box
+              sx={{
+                display: "flex",
+                height: "400px",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-              alt={product.name}
-            />
-          </Box>
-
-          <Box sx={{ alignSelf: "flex-start", margin: "10px" }}>
-            <Typography variant="h5">{product.name}</Typography>
-            <Typography
-              variant="h6"
-              sx={{ display: "flex", alignItems: "center" }}
             >
-              {product.price}
-              <MonixCoin
+              <img
+                src={`${config.urlBackend}/images/${product.image}`}
                 style={{
-                  marginLeft: ".25em",
-                  maxHeight: "1.25em",
-                  maxWidth: "1.25em",
+                  margin: "10px",
+                  maxHeight: "300px",
+                  maxWidth: "90%",
+                  width: "auto",
+                  height: "auto",
+                  alignSelf: "center",
                 }}
+                alt={product.name}
               />
-            </Typography>
-            <Box sx={{ display: "flex" }}>
-              <TextField
-                label="Nombre"
-                sx={{ m: 1 }}
-                InputProps={{
-                  type: "number",
-                  inputProps: { min: 1 },
-                }}
-                value={
-                  amount[product.id] !== undefined ? amount[product.id] : 0
-                }
-                onChange={(evt) => {
-                  const newAmount = { ...amount };
-                  newAmount[product.id] = Number(evt.currentTarget.value);
-                  setAmount(newAmount);
-                }}
-              />
-              <Button
-                onClick={() => {
-                  if (amount[product.id] < product.stock)
-                    buyproduct(product, amount[product.id]);
-                  else {
-                    setWarnedProduct(product);
-                  }
-                }}
-              >
-                Acheter !
-              </Button>
             </Box>
-          </Box>
-        </Paper>
-      ))}
+
+            <Box sx={{ alignSelf: "flex-start", margin: "10px" }}>
+              <Typography variant="h5">{product.name}</Typography>
+              <Typography
+                variant="h6"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                {product.price}
+                <MonixCoin
+                  style={{
+                    marginLeft: ".25em",
+                    maxHeight: "1.25em",
+                    maxWidth: "1.25em",
+                  }}
+                />
+              </Typography>
+              <Box sx={{ display: "flex" }}>
+                <TextField
+                  label="Nombre"
+                  sx={{ m: 1 }}
+                  InputProps={{
+                    type: "number",
+                    inputProps: { min: 1 },
+                  }}
+                  value={
+                    amount[product.id] !== undefined ? amount[product.id] : 0
+                  }
+                  onChange={(evt) => {
+                    const newAmount = { ...amount };
+                    newAmount[product.id] = Number(evt.currentTarget.value);
+                    setAmount(newAmount);
+                  }}
+                />
+                <Button
+                  onClick={() => {
+                    if (amount[product.id] < product.stock)
+                      buyproduct(product, amount[product.id]);
+                    else {
+                      setWarnedProduct(product);
+                    }
+                  }}
+                >
+                  Acheter !
+                </Button>
+              </Box>
+            </Box>
+          </Paper>
+        ))}
+      </div>
     </Box>
   );
 };
