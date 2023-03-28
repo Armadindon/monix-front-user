@@ -20,7 +20,7 @@ import {
   isDrawerOpened,
   switchDrawer,
 } from "../Model/ApplicationSlice";
-import { clearToken } from "../Model/UserSlice";
+import { clearToken, setAuthenticatedUser } from "../Model/UserSlice";
 import { clearTokenFromLocalStorage } from "../Model/tokenManager";
 
 const AppDrawer = () => {
@@ -87,6 +87,7 @@ const AppDrawer = () => {
           <ListItemButton
             onClick={() => {
               dispatch(clearToken());
+              dispatch(setAuthenticatedUser(undefined));
               clearTokenFromLocalStorage();
               dispatch(switchDrawer());
               dispatch(changePage("login"));
